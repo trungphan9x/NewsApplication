@@ -8,6 +8,7 @@
         <entry key="app/src/main/res/drawable/ic_report.xml" value="0.30416666666666664" />
         <entry key="app/src/main/res/drawable/ic_report_hide.xml" value="0.30416666666666664" />
         <entry key="app/src/main/res/drawable/ic_video_black_24dp.xml" value="0.23645833333333333" />
+        <entry key="app/src/main/res/layout/activity_article_detail.xml" value="0.2734375" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2558876811594203" />
         <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.2558876811594203" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.2203125" />
@@ -15,6 +16,8 @@
         <entry key="app/src/main/res/layout/fragment_notifications.xml" value="0.2203125" />
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.2203125" />
         <entry key="app/src/main/res/layout/item_news.xml" value="0.3228994472581732" />
+        <entry key="app/src/main/res/layout/item_news_photo.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/item_news_video.xml" value="3.3554539195093875" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.2203125" />
       </map>
     </option>

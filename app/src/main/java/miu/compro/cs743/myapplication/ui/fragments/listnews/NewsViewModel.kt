@@ -1,4 +1,4 @@
-package miu.compro.cs743.myapplication.ui.news
+package miu.compro.cs743.myapplication.ui.fragments.listnews
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

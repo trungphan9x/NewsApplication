@@ -1,4 +1,4 @@
-package miu.compro.cs743.myapplication.ui.home
+package miu.compro.cs743.myapplication.ui.fragments.home
 
 import android.os.Bundle
 import android.view.View

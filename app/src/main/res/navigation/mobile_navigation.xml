@@ -7,31 +7,31 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="miu.compro.cs743.myapplication.ui.home.HomeFragment"
+        android:name="miu.compro.cs743.myapplication.ui.fragments.home.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navigation_search"
-        android:name="miu.compro.cs743.myapplication.ui.search.SearchFragment"
+        android:name="miu.compro.cs743.myapplication.ui.fragments.search.SearchFragment"
         android:label="@string/title_search"
         tools:layout="@layout/fragment_search" />
 
     <fragment
         android:id="@+id/navigation_video"
-        android:name="miu.compro.cs743.myapplication.ui.video.VideoFragment"
+        android:name="miu.compro.cs743.myapplication.ui.fragments.video.VideoFragment"
         android:label="@string/title_video"
         tools:layout="@layout/fragment_video" />
 
     <fragment
         android:id="@+id/navigation_profile"
-        android:name="miu.compro.cs743.myapplication.ui.profile.ProfileFragment"
+        android:name="miu.compro.cs743.myapplication.ui.fragments.profile.ProfileFragment"
         android:label="@string/title_profile"
         tools:layout="@layout/fragment_profile" />
 
     <fragment
         android:id="@+id/newsFragment"
-        android:name="miu.compro.cs743.myapplication.ui.news.NewsFragment"
+        android:name="miu.compro.cs743.myapplication.ui.fragments.listnews.NewsFragment"
         android:label="fragment_news"
         tools:layout="@layout/fragment_news" />
 </navigation>

@@ -1,4 +1,4 @@
-package miu.compro.cs743.myapplication.ui.profile
+package miu.compro.cs743.myapplication.ui.fragments.profile
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

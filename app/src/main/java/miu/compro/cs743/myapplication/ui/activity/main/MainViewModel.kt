@@ -1,4 +1,4 @@
-package miu.compro.cs743.myapplication.ui.main
+package miu.compro.cs743.myapplication.ui.activity.main
 
 import androidx.navigation.NavController
 import miu.compro.cs743.myapplication.base.BaseViewModel

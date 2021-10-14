@@ -1,4 +1,4 @@
-package miu.compro.cs743.myapplication.ui.main
+package miu.compro.cs743.myapplication.ui.activity.main
 
 import android.os.Bundle
 import androidx.navigation.findNavController
