@@ -28,4 +28,10 @@
         android:name="miu.compro.cs743.myapplication.ui.profile.ProfileFragment"
         android:label="@string/title_profile"
         tools:layout="@layout/fragment_profile" />
+
+    <fragment
+        android:id="@+id/newsFragment"
+        android:name="miu.compro.cs743.myapplication.ui.news.NewsFragment"
+        android:label="fragment_news"
+        tools:layout="@layout/fragment_news" />
 </navigation>
