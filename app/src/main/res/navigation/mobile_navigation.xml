@@ -21,7 +21,7 @@
         android:id="@+id/navigation_video"
         android:name="miu.compro.cs743.myapplication.ui.video.VideoFragment"
         android:label="@string/title_video"
-        tools:layout="@layout/fragment_notifications" />
+        tools:layout="@layout/fragment_video" />
 
     <fragment
         android:id="@+id/navigation_profile"
