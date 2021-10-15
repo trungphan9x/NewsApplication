@@ -1,4 +1,4 @@
-package miu.compro.cs743.myapplication.ui.fragments.listnews
+package miu.compro.cs743.myapplication.ui.fragments.newslist
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,9 +9,9 @@ import miu.compro.cs743.myapplication.model.remote.response.Article
 import miu.compro.cs743.myapplication.ui.activity.articledetail.ArticleDetailActivity
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class NewsFragment : BaseFragment<FragmentNewsBinding>(FragmentNewsBinding::inflate) {
+class NewsListFragment : BaseFragment<FragmentNewsBinding>(FragmentNewsBinding::inflate) {
 
-    private val newsViewModel: NewsViewModel by viewModel()
+    private val newsListViewModel: NewsListViewModel by viewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -20,11 +20,11 @@ class NewsFragment : BaseFragment<FragmentNewsBinding>(FragmentNewsBinding::infl
     }
 
     private fun getExtraData() {
-        newsViewModel.topicTab = arguments?.getString(KEY_TOPIC) ?: ""
+        newsListViewModel.topicTab = arguments?.getString(KEY_TOPIC) ?: ""
     }
 
     private fun setObserve() {
-        newsViewModel.articles.observe(viewLifecycleOwner, { articles ->
+        newsListViewModel.articles.observe(viewLifecycleOwner, { articles ->
             articles?.let {
                 setRecyclerView(articles)
             }
@@ -60,9 +60,9 @@ class NewsFragment : BaseFragment<FragmentNewsBinding>(FragmentNewsBinding::infl
         const val SHARE_CLICKED = 2
         const val ITEM_CLICKED = 3
 
-        private const val KEY_TOPIC = "topic"
+        const val KEY_TOPIC = "topic"
 
-        fun newInstance(topicName: String? = null) = NewsFragment().apply {
+        fun newInstance(topicName: String? = null) = NewsListFragment().apply {
             arguments = Bundle().apply {
                 putString(KEY_TOPIC, topicName)
             }

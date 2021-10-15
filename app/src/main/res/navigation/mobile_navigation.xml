@@ -15,7 +15,8 @@
         android:id="@+id/navigation_search"
         android:name="miu.compro.cs743.myapplication.ui.fragments.search.SearchFragment"
         android:label="@string/title_search"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search" >
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_video"
@@ -30,8 +31,9 @@
         tools:layout="@layout/fragment_profile" />
 
     <fragment
-        android:id="@+id/newsFragment"
-        android:name="miu.compro.cs743.myapplication.ui.fragments.listnews.NewsFragment"
+        android:id="@+id/navigation_news_list"
+        android:name="miu.compro.cs743.myapplication.ui.fragments.newslist.NewsListFragment"
         android:label="fragment_news"
-        tools:layout="@layout/fragment_news" />
+        tools:layout="@layout/fragment_news" >
+    </fragment>
 </navigation>

@@ -5,7 +5,7 @@ import miu.compro.cs743.myapplication.ui.activity.articledetail.ArticleDetailVie
 import miu.compro.cs743.myapplication.ui.fragments.search.SearchViewModel
 import miu.compro.cs743.myapplication.ui.fragments.home.HomeViewModel
 import miu.compro.cs743.myapplication.ui.activity.main.MainViewModel
-import miu.compro.cs743.myapplication.ui.fragments.listnews.NewsViewModel
+import miu.compro.cs743.myapplication.ui.fragments.newslist.NewsListViewModel
 import miu.compro.cs743.myapplication.ui.fragments.video.VideoViewModel
 import miu.compro.cs743.myapplication.ui.fragments.profile.ProfileViewModel
 import org.koin.android.viewmodel.dsl.viewModel
@@ -15,9 +15,9 @@ val viewModelsModule = module {
     factory { Dispatchers.IO }
     viewModel { MainViewModel(get()) }
     viewModel { HomeViewModel() }
-    viewModel { SearchViewModel() }
+    viewModel { SearchViewModel(get(), get()) }
     viewModel { VideoViewModel() }
     viewModel { ProfileViewModel() }
-    viewModel { NewsViewModel(get(), get()) }
+    viewModel { NewsListViewModel(get(), get()) }
     viewModel { ArticleDetailViewModel() }
 }

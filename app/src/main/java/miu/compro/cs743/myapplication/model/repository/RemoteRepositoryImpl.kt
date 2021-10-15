@@ -12,4 +12,10 @@ class RemoteRepositoryImpl(private val apiService: ApiService) : BaseRepository(
             apiService.getArticleList(category)
         }
     }
+
+    override suspend fun searchArticleByKeyword(keyword: String): BaseApiResult<NewsAppResponseBody<List<Article>>> {
+        return safeApi {
+            apiService.searchArticleByKeyword(keyword)
+        }
+    }
 }

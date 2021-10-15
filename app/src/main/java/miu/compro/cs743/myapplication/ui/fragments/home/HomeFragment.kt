@@ -19,7 +19,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     }
 
     private fun setViewPager() {
-        val adapter = HomePagerAdapter(childFragmentManager,lifecycle, tabs)
+        val adapter = HomePagerAdapter(childFragmentManager, lifecycle, tabs)
         binding.viewPager.adapter = adapter
 
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->

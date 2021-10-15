@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<searchable xmlns:android="http://schemas.android.com/apk/res/android"
+android:label="kakak"
+android:hint="Search the article by keyword. Please enter keyword..."
+android:searchSuggestAuthority="miu.compro.cs743.myapplication.ui.fragments.search.MySuggestionProvider"
+android:searchSuggestSelection=" ?" >
+</searchable>

@@ -1,4 +1,4 @@
-package miu.compro.cs743.myapplication.ui.fragments.listnews
+package miu.compro.cs743.myapplication.ui.fragments.newslist
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,9 +8,9 @@ import com.bumptech.glide.Glide
 import miu.compro.cs743.myapplication.R
 import miu.compro.cs743.myapplication.databinding.ItemNewsPhotoBinding
 import miu.compro.cs743.myapplication.model.remote.response.Article
-import miu.compro.cs743.myapplication.ui.fragments.listnews.NewsFragment.Companion.BOOKMARK_CLICKED
-import miu.compro.cs743.myapplication.ui.fragments.listnews.NewsFragment.Companion.ITEM_CLICKED
-import miu.compro.cs743.myapplication.ui.fragments.listnews.NewsFragment.Companion.SHARE_CLICKED
+import miu.compro.cs743.myapplication.ui.fragments.newslist.NewsListFragment.Companion.BOOKMARK_CLICKED
+import miu.compro.cs743.myapplication.ui.fragments.newslist.NewsListFragment.Companion.ITEM_CLICKED
+import miu.compro.cs743.myapplication.ui.fragments.newslist.NewsListFragment.Companion.SHARE_CLICKED
 
 class NewsAdapter(private val articles: List<Article>) : RecyclerView.Adapter<NewsAdapter.ViewHolder>() {
 

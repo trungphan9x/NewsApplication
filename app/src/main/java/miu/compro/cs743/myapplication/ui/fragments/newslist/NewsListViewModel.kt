@@ -1,4 +1,4 @@
-package miu.compro.cs743.myapplication.ui.fragments.listnews
+package miu.compro.cs743.myapplication.ui.fragments.newslist
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -10,8 +10,8 @@ import miu.compro.cs743.myapplication.model.enum.Status
 import miu.compro.cs743.myapplication.model.remote.response.Article
 import miu.compro.cs743.myapplication.model.repository.RemoteRepository
 
-class NewsViewModel(private val defaultDispatcher: CoroutineDispatcher,
-                    private val repository: RemoteRepository
+class NewsListViewModel(private val defaultDispatcher: CoroutineDispatcher,
+                        private val repository: RemoteRepository
                     ) : BaseViewModel() {
 
     init {
