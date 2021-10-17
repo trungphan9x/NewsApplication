@@ -2,6 +2,7 @@ package miu.compro.cs743.myapplication.ui.activity.main
 
 import android.os.Bundle
 import android.view.Menu
+import android.view.WindowManager
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -45,41 +46,28 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
     }
 
     private fun setListener() {
-        binding.navView.setOnItemSelectedListener {
-            when (it.itemId) {
-                R.id.navigation_home -> {
 
-                    return@setOnItemSelectedListener true
+        navController.addOnDestinationChangedListener { controller, destination, arguments ->
+            when (destination.id) {
+                R.id.navigation_home -> {
+                    supportActionBar?.isShowing?.let { isShow->
+                        if (isShow) supportActionBar?.hide()
+                    }
                 }
                 R.id.navigation_search -> {
-
-                    return@setOnItemSelectedListener true
+                    supportActionBar?.isShowing?.let { isShow->
+                        if (!isShow) supportActionBar?.show()
+                    }
                 }
                 R.id.navigation_video -> {
-
-                    return@setOnItemSelectedListener true
+                    supportActionBar?.isShowing?.let { isShow->
+                        if (isShow) supportActionBar?.hide()
+                    }
                 }
                 R.id.navigation_profile -> {
-
-                    return@setOnItemSelectedListener true
-                }
-            }
-            return@setOnItemSelectedListener false
-        }
-
-        binding.navView.setOnItemReselectedListener {
-            when (it.itemId) {
-                R.id.navigation_home -> {
-
-                }
-                R.id.navigation_search -> {
-
-                }
-                R.id.navigation_video -> {
-
-                }
-                R.id.navigation_profile -> {
-
+                    supportActionBar?.isShowing?.let { isShow->
+                        if (isShow) supportActionBar?.hide()
+                    }
                 }
             }
         }

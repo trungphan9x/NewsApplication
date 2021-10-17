@@ -16,7 +16,7 @@ val viewModelsModule = module {
     viewModel { MainViewModel(get()) }
     viewModel { HomeViewModel() }
     viewModel { SearchViewModel(get(), get()) }
-    viewModel { VideoViewModel() }
+    viewModel { VideoViewModel(get(), get()) }
     viewModel { ProfileViewModel() }
     viewModel { NewsListViewModel(get(), get()) }
     viewModel { ArticleDetailViewModel() }

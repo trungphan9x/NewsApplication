@@ -8,4 +8,6 @@ interface RemoteRepository {
     suspend fun getArticleByCategory(category: String) : BaseApiResult<NewsAppResponseBody<List<Article>>>
 
     suspend fun searchArticleByKeyword(keyword: String) : BaseApiResult<NewsAppResponseBody<List<Article>>>
+
+    suspend fun getVideoArticles() : BaseApiResult<NewsAppResponseBody<List<Article>>>
 }

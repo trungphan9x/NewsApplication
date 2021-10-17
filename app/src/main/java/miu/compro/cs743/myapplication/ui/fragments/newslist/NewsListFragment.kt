@@ -32,12 +32,13 @@ class NewsListFragment : BaseFragment<FragmentNewsBinding>(FragmentNewsBinding::
     }
 
     private fun setRecyclerView(articles: List<Article>) {
-        binding.rvArticles.adapter = NewsAdapter(articles).apply {
+        binding.rvArticles.adapter = PhotoNewsAdapter(articles).apply {
             setOnItemClickListener { which, position, article, rootView ->
                 when (which) {
                     ITEM_CLICKED -> {
                         val intent = Intent(requireActivity(), ArticleDetailActivity::class.java).apply {
                             putExtra("article", article)
+                            putExtra("isVideo", false)
                         }
                         startActivity(intent)
 

@@ -5,4 +5,5 @@ import miu.compro.cs743.myapplication.model.remote.response.Article
 
 class ArticleDetailViewModel : BaseViewModel() {
     var article: Article? = null
+    var isVideo = false
 }

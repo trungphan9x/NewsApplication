@@ -9,6 +9,90 @@
     <WebView
         android:id="@+id/webView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        tools:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/video_holder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <VideoView
+                android:id="@+id/videoView"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_centerHorizontal="true" />
+
+        </LinearLayout>
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="16dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/sf_pro_text_semibold"
+            android:lineSpacingExtra="1.5dp"
+            android:maxLines="3"
+            android:textColor="@color/text_default"
+            android:textSize="16sp"
+            tools:text="TSMC and Sony considering joint chip factory, Japan gov't to help -Nikkei - Reuters" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_source"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:fontFamily="@font/sf_compactdisplay_medium"
+                android:text="CNN"
+                android:textColor="#999999"
+                android:textSize="12sp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_published_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/sf_compact_regular"
+                android:paddingStart="5dp"
+                android:text="Convolutional Neural Network"
+                android:textColor="#999999"
+                android:textSize="12sp"
+                tools:ignore="NestedWeights" />
+        </LinearLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="16dp"
+                android:fontFamily="@font/sf_compact_regular"
+                android:lineSpacingExtra="1.5dp"
+                android:textColor="@color/text_default"
+                android:textSize="16sp"
+                android:paddingBottom="100dp"
+                tools:text="TSMC and Sony considering joint chip factory, Japan gov't to help -Nikkei - Reuters" />
+        </ScrollView>
+
+    </LinearLayout>
 
 </RelativeLayout>

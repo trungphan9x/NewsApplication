@@ -12,7 +12,7 @@ import miu.compro.cs743.myapplication.ui.fragments.newslist.NewsListFragment.Com
 import miu.compro.cs743.myapplication.ui.fragments.newslist.NewsListFragment.Companion.ITEM_CLICKED
 import miu.compro.cs743.myapplication.ui.fragments.newslist.NewsListFragment.Companion.SHARE_CLICKED
 
-class NewsAdapter(private val articles: List<Article>) : RecyclerView.Adapter<NewsAdapter.ViewHolder>() {
+class PhotoNewsAdapter(private val articles: List<Article>) : RecyclerView.Adapter<PhotoNewsAdapter.ViewHolder>() {
 
     private var onItemClickListener: ((Int, Int, Article, View) -> Unit)? = null
 
@@ -20,7 +20,7 @@ class NewsAdapter(private val articles: List<Article>) : RecyclerView.Adapter<Ne
         this.onItemClickListener = onItemClickListener
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoNewsAdapter.ViewHolder {
         return ViewHolder(
             ItemNewsPhotoBinding.inflate(
                 LayoutInflater.from(parent.context),
@@ -30,7 +30,7 @@ class NewsAdapter(private val articles: List<Article>) : RecyclerView.Adapter<Ne
         )
     }
 
-    override fun onBindViewHolder(holder: NewsAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: PhotoNewsAdapter.ViewHolder, position: Int) {
         holder.binding.tvTitle.text = articles[position].title
         holder.binding.tvSource.text = articles[position].source.name
         holder.binding.tvPublishedDate.text = articles[position].publishedAt

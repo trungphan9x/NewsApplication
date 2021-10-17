@@ -12,4 +12,7 @@ interface ApiService {
 
     @GET("https://newsapi.org/v2/everything?apiKey=c393966132514b3990cba7dfa47e648b")
     suspend fun searchArticleByKeyword(@Query("q") keyword: String): NewsAppResponseBody<List<Article>>
+
+    @GET("https://trungphan9x.github.io/videos.json")
+    suspend fun getVideoArticles(): NewsAppResponseBody<List<Article>>
 }
