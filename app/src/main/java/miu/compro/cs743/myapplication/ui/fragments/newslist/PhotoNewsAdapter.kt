@@ -3,6 +3,8 @@ package miu.compro.cs743.myapplication.ui.fragments.newslist
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import miu.compro.cs743.myapplication.R
@@ -12,7 +14,8 @@ import miu.compro.cs743.myapplication.ui.fragments.newslist.NewsListFragment.Com
 import miu.compro.cs743.myapplication.ui.fragments.newslist.NewsListFragment.Companion.ITEM_CLICKED
 import miu.compro.cs743.myapplication.ui.fragments.newslist.NewsListFragment.Companion.SHARE_CLICKED
 
-class PhotoNewsAdapter(private val articles: List<Article>) : RecyclerView.Adapter<PhotoNewsAdapter.ViewHolder>() {
+//class PhotoNewsAdapter(private val articles: List<Article>) : RecyclerView.Adapter<PhotoNewsAdapter.ViewHolder>() {
+class PhotoNewsAdapter(private val articles: List<Article>) : ListAdapter<Article, PhotoNewsAdapter.ViewHolder>(DiffCallback) {
 
     private var onItemClickListener: ((Int, Int, Article, View) -> Unit)? = null
 
@@ -56,4 +59,18 @@ class PhotoNewsAdapter(private val articles: List<Article>) : RecyclerView.Adapt
     override fun getItemCount() = articles.size
 
     inner class ViewHolder(val binding: ItemNewsPhotoBinding) : RecyclerView.ViewHolder(binding.root)
+
+    /**
+     * Allows the RecyclerView to determine which items have changed when the [List] of [ChannelList]
+     * has been updated.
+     */
+    companion object DiffCallback : DiffUtil.ItemCallback<Article>() {
+        //Use Kotlin's referential equality operator (===), which returns true if the object references for oldItem and newItem are the same.
+        //override fun areItemsTheSame(oldItem: PhotoDetailEntity, newItem: PhotoDetailEntity) = oldItem === newItem
+        override fun areItemsTheSame(oldItem: Article, newItem: Article) =
+            oldItem.title == newItem.title
+
+        override fun areContentsTheSame(oldItem: Article, newItem: Article) =
+            oldItem == newItem
+    }
 }

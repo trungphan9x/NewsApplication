@@ -17,8 +17,21 @@ class ArticleDetailActivity : BaseActivity<ActivityArticleDetailBinding>(Activit
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        showActionBar()
         getExtraData()
         setUpView()
+    }
+
+    private fun showActionBar() {
+        supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(true)
+            title = null
+        }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        finish()
+        return true
     }
 
     private fun getExtraData() {

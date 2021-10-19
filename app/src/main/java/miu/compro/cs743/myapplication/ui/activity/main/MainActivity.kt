@@ -1,11 +1,6 @@
 package miu.compro.cs743.myapplication.ui.activity.main
 
 import android.os.Bundle
-import android.view.Menu
-import android.view.WindowManager
-import androidx.appcompat.widget.SearchView
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -13,10 +8,7 @@ import androidx.navigation.ui.setupWithNavController
 import miu.compro.cs743.myapplication.R
 import miu.compro.cs743.myapplication.base.BaseActivity
 import miu.compro.cs743.myapplication.databinding.ActivityMainBinding
-import miu.compro.cs743.myapplication.ui.fragments.home.HomeFragment
-import miu.compro.cs743.myapplication.ui.fragments.profile.ProfileFragment
-import miu.compro.cs743.myapplication.ui.fragments.search.SearchFragment
-import miu.compro.cs743.myapplication.ui.fragments.video.VideoFragment
+import miu.compro.cs743.myapplication.util.hideKeyboard
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
@@ -43,6 +35,16 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         binding.navView.setupWithNavController(navController)
+
+//        actionBar!!.setDisplayShowCustomEnabled(true)
+//        actionBar!!.displayOptions = DISPLAY_SHOW_CUSTOM
+//        actionBar!!.setDisplayHomeAsUpEnabled(false)
+//        actionBar!!.setDisplayShowHomeEnabled(false)
+//        actionBar!!.setDisplayUseLogoEnabled(false)
+
+//        val customView: View = layoutInflater.inflate(R.layout.action_bar, null)
+//        actionBar.setCustomView(customView)
+//        customView.parent.setContentInsetsAbsolute(0, 0)
     }
 
     private fun setListener() {
@@ -53,6 +55,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
                     supportActionBar?.isShowing?.let { isShow->
                         if (isShow) supportActionBar?.hide()
                     }
+                    binding.container.hideKeyboard()
+
                 }
                 R.id.navigation_search -> {
                     supportActionBar?.isShowing?.let { isShow->
@@ -63,11 +67,13 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
                     supportActionBar?.isShowing?.let { isShow->
                         if (isShow) supportActionBar?.hide()
                     }
+                    binding.container.hideKeyboard()
                 }
                 R.id.navigation_profile -> {
                     supportActionBar?.isShowing?.let { isShow->
                         if (isShow) supportActionBar?.hide()
                     }
+                    binding.container.hideKeyboard()
                 }
             }
         }

@@ -29,6 +29,7 @@ class VideoFragment : BaseFragment<FragmentVideoBinding>(FragmentVideoBinding::i
     }
 
     private fun setRecyclerView(articles: List<Article>) {
+        binding.rvArticles.setHasFixedSize(true)
         binding.rvArticles.adapter = VideoNewsAdapter(articles).apply {
             setOnItemClickListener { which, position, article, rootView ->
                 when (which) {

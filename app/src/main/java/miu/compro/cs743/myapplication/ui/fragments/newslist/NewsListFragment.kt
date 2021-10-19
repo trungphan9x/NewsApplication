@@ -32,6 +32,7 @@ class NewsListFragment : BaseFragment<FragmentNewsBinding>(FragmentNewsBinding::
     }
 
     private fun setRecyclerView(articles: List<Article>) {
+        binding.rvArticles.setHasFixedSize(true)
         binding.rvArticles.adapter = PhotoNewsAdapter(articles).apply {
             setOnItemClickListener { which, position, article, rootView ->
                 when (which) {

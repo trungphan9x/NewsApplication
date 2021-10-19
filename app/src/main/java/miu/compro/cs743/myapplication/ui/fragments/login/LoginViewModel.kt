@@ -1,4 +1,4 @@
-package miu.compro.cs743.myapplication.ui.fragments.profile
+package miu.compro.cs743.myapplication.ui.fragments.login
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -9,9 +9,10 @@ import miu.compro.cs743.myapplication.base.BaseViewModel
 import miu.compro.cs743.myapplication.model.repository.RoomRepository
 import miu.compro.cs743.myapplication.model.roomdb.entity.User
 
-class ProfileViewModel(private val defaultDispatcher: CoroutineDispatcher,
-                       private val repository: RoomRepository
+class LoginViewModel(private val defaultDispatcher: CoroutineDispatcher,
+                     private val repository: RoomRepository
 ) : BaseViewModel() {
+
     init {
         getUser()
     }
@@ -26,4 +27,5 @@ class ProfileViewModel(private val defaultDispatcher: CoroutineDispatcher,
             _users.postValue(repository.getAllUsers())
         }
     }
+
 }
