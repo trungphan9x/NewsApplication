@@ -6,20 +6,39 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 import miu.compro.cs743.myapplication.base.BaseViewModel
+import miu.compro.cs743.myapplication.model.remote.response.Article
 import miu.compro.cs743.myapplication.model.repository.RoomRepository
-import miu.compro.cs743.myapplication.model.roomdb.entity.User
 
 class ProfileViewModel(private val defaultDispatcher: CoroutineDispatcher,
                        private val repository: RoomRepository
 ) : BaseViewModel() {
 
-    private val _users : MutableLiveData<List<User>?> = MutableLiveData()
-    val users: LiveData<List<User>?> = _users
+    private val _articles = MutableLiveData<List<Article>?>()
+    val article : LiveData<List<Article>?> = _articles
 
-    fun getUser() {
-        viewModelScope.launch (defaultDispatcher){
-            val users = repository.getAllUsers()
-            _users.postValue(users)
+    fun getAllBookmark() {
+        viewModelScope.launch(defaultDispatcher) {
+            repository.getAllBookmark().let {
+                _articles.postValue(it.sortedByDescending { it.bookmarkedAt })
+            }
+        }
+    }
+
+    fun deleteBookmark(article: Article) {
+        viewModelScope.launch (defaultDispatcher) {
+            article.title?.let {
+                repository.deleteBookmark(article.title)?.let {
+                    getAllBookmark()
+                }
+            }
+        }
+    }
+
+    fun deleteAllBookmark() {
+        viewModelScope.launch(defaultDispatcher) {
+            repository.deleteAllBookmark()?.let {
+                getAllBookmark()
+            }
         }
     }
 }

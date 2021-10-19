@@ -3,21 +3,24 @@ package miu.compro.cs743.myapplication.ui.fragments.newslist
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
+import miu.compro.cs743.myapplication.NewsApplication.Companion.applicationContext
 import miu.compro.cs743.myapplication.R
 import miu.compro.cs743.myapplication.databinding.ItemNewsPhotoBinding
 import miu.compro.cs743.myapplication.injection.GlideApp
+import miu.compro.cs743.myapplication.model.enum.CurrentTab
 import miu.compro.cs743.myapplication.model.remote.response.Article
 import miu.compro.cs743.myapplication.ui.fragments.newslist.NewsListFragment.Companion.BOOKMARK_CLICKED
 import miu.compro.cs743.myapplication.ui.fragments.newslist.NewsListFragment.Companion.ITEM_CLICKED
 import miu.compro.cs743.myapplication.ui.fragments.newslist.NewsListFragment.Companion.SHARE_CLICKED
+import miu.compro.cs743.myapplication.ui.fragments.newslist.NewsListFragment.Companion.UNBOOKMARK_CLICKED
+import miu.compro.cs743.myapplication.util.getCurrentTab
 
 //class PhotoNewsAdapter(private val articles: List<Article>) : RecyclerView.Adapter<PhotoNewsAdapter.ViewHolder>() {
 class PhotoNewsAdapter() : ListAdapter<Article, PhotoNewsAdapter.ViewHolder>(DiffCallback) {
-
     private val articles: ArrayList<Article> = arrayListOf()
 
     private var onItemClickListener: ((Int, Int, Article, View) -> Unit)? = null
@@ -44,8 +47,9 @@ class PhotoNewsAdapter() : ListAdapter<Article, PhotoNewsAdapter.ViewHolder>(Dif
 
     override fun onBindViewHolder(holder: PhotoNewsAdapter.ViewHolder, position: Int) {
         holder.binding.tvTitle.text = articles[position].title
-        holder.binding.tvSource.text = articles[position].source.name
+        holder.binding.tvSource.text = articles[position].source?.name
         holder.binding.tvPublishedDate.text = articles[position].publishedAtModified
+        holder.binding.btnSetting
 
         GlideApp.with(holder.binding.root.context)
             .load(articles[position].urlToImage)
@@ -56,8 +60,26 @@ class PhotoNewsAdapter() : ListAdapter<Article, PhotoNewsAdapter.ViewHolder>(Dif
             onItemClickListener?.invoke(ITEM_CLICKED, position, articles[position], holder.binding.root)
         }
 
-        holder.binding.btnBookmark.setOnClickListener {
-            onItemClickListener?.invoke(BOOKMARK_CLICKED, position, articles[position], holder.binding.root)
+        holder.binding.btnSetting.setOnClickListener {
+            val popup = PopupMenu(it.context, it).apply {
+                inflate(R.menu.three_dot_menu)
+                this.menu.findItem(R.id.menu_bookmark).apply {
+                    when(applicationContext().getCurrentTab()) {
+                        CurrentTab.PROFILE.name -> this.title = "Delete this Bookmark"
+                    }
+                }
+                setOnMenuItemClickListener {
+                    when (it.itemId) {
+                        R.id.menu_bookmark ->    {
+                            onItemClickListener?.invoke(if(applicationContext().getCurrentTab()==CurrentTab.PROFILE.name) UNBOOKMARK_CLICKED else BOOKMARK_CLICKED, position, articles[position], holder.binding.root)
+                            true
+                        }
+                        else -> false
+                    }
+                }
+            }
+            popup.show()
+            true
         }
 
         holder.binding.btnShare.setOnClickListener {

@@ -17,10 +17,10 @@ val viewModelsModule = module {
     factory { Dispatchers.IO }
     viewModel { MainViewModel(get()) }
     viewModel { HomeViewModel() }
-    viewModel { SearchViewModel(get(), get()) }
-    viewModel { VideoViewModel(get(), get()) }
+    viewModel { SearchViewModel(get(), get(), get()) }
+    viewModel { VideoViewModel(get(), get(), get()) }
     viewModel { ProfileViewModel(get(), get()) }
-    viewModel { NewsListViewModel(get(), get()) }
+    viewModel { NewsListViewModel(get(), get(), get()) }
     viewModel { ArticleDetailViewModel() }
     viewModel { LoginViewModel(get(), get()) }
     viewModel { RegisterViewModel(get(), get()) }

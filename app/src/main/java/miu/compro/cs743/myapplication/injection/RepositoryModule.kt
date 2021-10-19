@@ -8,5 +8,5 @@ import org.koin.dsl.module
 
 val repositoryModule = module {
     factory<RemoteRepository> { RemoteRepositoryImpl(get()) }
-    factory<RoomRepository> { RoomRepositoryImpl(get()) }
+    factory<RoomRepository> { RoomRepositoryImpl(get(), get()) }
 }

@@ -16,16 +16,23 @@ import miu.compro.cs743.myapplication.ui.fragments.newslist.NewsListFragment.Com
 import miu.compro.cs743.myapplication.ui.fragments.newslist.NewsListFragment.Companion.SHARE_CLICKED
 import org.koin.android.viewmodel.ext.android.viewModel
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
+import miu.compro.cs743.myapplication.NewsApplication
+import miu.compro.cs743.myapplication.NewsApplication.Companion.applicationContext
 import miu.compro.cs743.myapplication.model.remote.response.Article
 import miu.compro.cs743.myapplication.ui.activity.main.MainActivity
+import miu.compro.cs743.myapplication.util.NewsAppSharedPreference
+import miu.compro.cs743.myapplication.util.getCurrentUser
+import org.koin.android.ext.android.inject
 
 
 class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding::inflate),
     SearchView.OnQueryTextListener {
     private val searchViewModel: SearchViewModel by viewModel()
+    private val sharedPreference: NewsAppSharedPreference by inject()
     private lateinit var photoAdapter: PhotoNewsAdapter
 
     override fun onCreateView(
@@ -108,7 +115,11 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
 
                     }
                     BOOKMARK_CLICKED -> {
-
+                        if(applicationContext().getCurrentUser() != null) {
+                            searchViewModel.insert(article)
+                        } else {
+                            Toast.makeText(requireContext(), "You need to log in to save the bookmark", Toast.LENGTH_SHORT).show()
+                        }
                     }
                     SHARE_CLICKED -> {
                         article.url?.let {

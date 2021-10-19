@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.MediaController
+import android.widget.PopupMenu
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -45,7 +46,7 @@ class VideoNewsAdapter() : ListAdapter<Article, VideoNewsAdapter.ViewHolder>(Dif
 
     override fun onBindViewHolder(holder: VideoNewsAdapter.ViewHolder, position: Int) {
         holder.binding.tvTitle.text = articles[position].title
-        holder.binding.tvSource.text = articles[position].source.name
+        holder.binding.tvSource.text = articles[position].source?.name
         holder.binding.tvPublishedDate.text = articles[position].publishedAtModified
 
         GlideApp.with(holder.binding.root.context)
@@ -57,8 +58,21 @@ class VideoNewsAdapter() : ListAdapter<Article, VideoNewsAdapter.ViewHolder>(Dif
             onItemClickListener?.invoke(ITEM_CLICKED, position, articles[position], holder.binding.root)
         }
 
-        holder.binding.btnBookmark.setOnClickListener {
-            onItemClickListener?.invoke(BOOKMARK_CLICKED, position, articles[position], holder.binding.root)
+        holder.binding.btnSetting.setOnClickListener {
+            val popup = PopupMenu(it.context, it).apply {
+                inflate(R.menu.three_dot_menu)
+                setOnMenuItemClickListener {
+                    when (it.itemId) {
+                        R.id.menu_bookmark ->    {
+                            onItemClickListener?.invoke(BOOKMARK_CLICKED, position, articles[position], holder.binding.root)
+                            true
+                        }
+                        else -> false
+                    }
+                }
+            }
+            popup.show()
+            true
         }
 
         holder.binding.btnShare.setOnClickListener {

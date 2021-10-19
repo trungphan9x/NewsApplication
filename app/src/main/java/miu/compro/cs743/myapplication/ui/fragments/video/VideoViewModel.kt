@@ -9,9 +9,11 @@ import miu.compro.cs743.myapplication.base.BaseViewModel
 import miu.compro.cs743.myapplication.model.enum.Status
 import miu.compro.cs743.myapplication.model.remote.response.Article
 import miu.compro.cs743.myapplication.model.repository.RemoteRepository
+import miu.compro.cs743.myapplication.model.repository.RoomRepository
 
 class VideoViewModel(private val defaultDispatcher: CoroutineDispatcher,
-                     private val repository: RemoteRepository
+                     private val repositoryRemote: RemoteRepository,
+                     private val repositoryRoom: RoomRepository
 ) : BaseViewModel() {
 
 
@@ -24,7 +26,7 @@ class VideoViewModel(private val defaultDispatcher: CoroutineDispatcher,
 
     private fun getVideoArticles() {
         viewModelScope.launch (defaultDispatcher) {
-            repository.getVideoArticles().let { baseApiResult ->
+            repositoryRemote.getVideoArticles().let { baseApiResult ->
                 when (baseApiResult.status) {
                     Status.SUCCESS -> {
                         baseApiResult.data?.let { result ->
@@ -46,6 +48,12 @@ class VideoViewModel(private val defaultDispatcher: CoroutineDispatcher,
                     }
                 }
             }
+        }
+    }
+
+    fun insert(article: Article) {
+        viewModelScope.launch(defaultDispatcher) {
+            repositoryRoom.insertBookmark(article = article)
         }
     }
 }

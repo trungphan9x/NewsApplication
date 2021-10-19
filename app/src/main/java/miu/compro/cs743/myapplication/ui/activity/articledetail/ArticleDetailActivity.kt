@@ -66,7 +66,7 @@ class ArticleDetailActivity : BaseActivity<ActivityArticleDetailBinding>(Activit
                     }
 
                     binding.tvTitle.text = it.title
-                    binding.tvSource.text = it.source.name
+                    binding.tvSource.text = it.source?.name
                     binding.tvPublishedDate.text = it.publishedAtModified
                     binding.tvContent.text = it.description
                 }

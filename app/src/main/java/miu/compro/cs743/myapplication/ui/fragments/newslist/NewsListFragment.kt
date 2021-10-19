@@ -3,17 +3,23 @@ package miu.compro.cs743.myapplication.ui.fragments.newslist
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import miu.compro.cs743.myapplication.NewsApplication.Companion.applicationContext
 import miu.compro.cs743.myapplication.base.BaseFragment
 import miu.compro.cs743.myapplication.databinding.FragmentNewsBinding
 import miu.compro.cs743.myapplication.model.remote.response.Article
 import miu.compro.cs743.myapplication.ui.activity.articledetail.ArticleDetailActivity
+import miu.compro.cs743.myapplication.util.NewsAppSharedPreference
+import miu.compro.cs743.myapplication.util.getCurrentUser
+import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class NewsListFragment : BaseFragment<FragmentNewsBinding>(FragmentNewsBinding::inflate) {
 
     private val newsListViewModel: NewsListViewModel by viewModel()
     private lateinit var photoAdapter: PhotoNewsAdapter
+    private val sharedPreference: NewsAppSharedPreference by inject()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setRecyclerView()
@@ -55,7 +61,11 @@ class NewsListFragment : BaseFragment<FragmentNewsBinding>(FragmentNewsBinding::
 
                     }
                     BOOKMARK_CLICKED -> {
-
+                       if(applicationContext().getCurrentUser() != null) {
+                           newsListViewModel.insert(article)
+                       } else {
+                           Toast.makeText(requireContext(), "You need to log in to save the bookmark", Toast.LENGTH_SHORT).show()
+                       }
                     }
                     SHARE_CLICKED -> {
                         article.url?.let {
@@ -74,6 +84,7 @@ class NewsListFragment : BaseFragment<FragmentNewsBinding>(FragmentNewsBinding::
         const val BOOKMARK_CLICKED = 1
         const val SHARE_CLICKED = 2
         const val ITEM_CLICKED = 3
+        const val UNBOOKMARK_CLICKED = 4
 
         const val KEY_TOPIC = "topic"
 

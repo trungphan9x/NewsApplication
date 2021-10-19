@@ -74,6 +74,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/divider"
         app:layout_constraintBottom_toBottomOf="parent"
+        tools:visibility="gone"
         >
 
         <androidx.appcompat.widget.AppCompatImageView
@@ -127,20 +128,25 @@
             android:layout_weight="17"
             app:srcCompat="@drawable/ic_bookmark_1" />
     </LinearLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_articles"
+    <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:paddingBottom="60dp"
-        app:layoutManager="LinearLayoutManager"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider"
-        tools:listitem="@layout/item_news_photo"
-        tools:visibility="gone" />
-
+        app:layout_constraintTop_toBottomOf="@+id/divider">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_articles"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="300dp"
+            app:layoutManager="LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divider"
+            tools:listitem="@layout/item_news_photo" />
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

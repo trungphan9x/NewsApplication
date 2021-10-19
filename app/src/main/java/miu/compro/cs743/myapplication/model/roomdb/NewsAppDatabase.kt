@@ -4,14 +4,20 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
+import miu.compro.cs743.myapplication.model.roomdb.converter.SourceTypeConverter
+import miu.compro.cs743.myapplication.model.roomdb.dao.BookmarkDao
 import miu.compro.cs743.myapplication.model.roomdb.dao.UserDao
+import miu.compro.cs743.myapplication.model.roomdb.entity.BookmarkEntity
 import miu.compro.cs743.myapplication.model.roomdb.entity.User
 
-@Database(entities = [User::class], version = 1)
+@Database(entities = [User::class, BookmarkEntity::class], version = 1)
+@TypeConverters(SourceTypeConverter::class)
 abstract class NewsAppDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao
+    abstract fun bookmarkDao(): BookmarkDao
 
     companion object {
         // Singleton prevents multiple instances of database opening at the same time.

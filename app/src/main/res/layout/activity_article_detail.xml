@@ -27,7 +27,7 @@
             <VideoView
                 android:id="@+id/videoView"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"/>
+                android:layout_height="wrap_content"/>
 
         </LinearLayout>
 
@@ -60,7 +60,17 @@
                 android:fontFamily="@font/sf_compactdisplay_medium"
                 android:text="CNN"
                 android:textColor="#999999"
-                android:textSize="12sp" />
+                android:textSize="16sp" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_dot"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/sf_compactdisplay_medium"
+                android:textSize="20sp"
+                android:paddingStart="2dp"
+                android:paddingEnd="2dp"
+                android:textColor="#5E5B5B"
+                android:text="."/>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_published_date"
@@ -68,10 +78,9 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="@font/sf_compact_regular"
-                android:paddingStart="5dp"
                 android:text="Convolutional Neural Network"
                 android:textColor="#999999"
-                android:textSize="12sp"
+                android:textSize="16sp"
                 tools:ignore="NestedWeights" />
         </LinearLayout>
 

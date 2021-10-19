@@ -9,9 +9,11 @@ import miu.compro.cs743.myapplication.base.BaseViewModel
 import miu.compro.cs743.myapplication.model.enum.Status
 import miu.compro.cs743.myapplication.model.remote.response.Article
 import miu.compro.cs743.myapplication.model.repository.RemoteRepository
+import miu.compro.cs743.myapplication.model.repository.RoomRepository
 
 class SearchViewModel(private val defaultDispatcher: CoroutineDispatcher,
-                      private val repository: RemoteRepository
+                      private val repositoryRemote: RemoteRepository,
+                      private val repositoryRoom: RoomRepository
 ) : BaseViewModel() {
 
     private val _articles = MutableLiveData<List<Article>?>()
@@ -21,7 +23,7 @@ class SearchViewModel(private val defaultDispatcher: CoroutineDispatcher,
     fun searchArticleByKeyword(keyword: String?) {
         viewModelScope.launch (defaultDispatcher) {
             keyword?.let {
-                repository.searchArticleByKeyword(it).let { baseApiResult ->
+                repositoryRemote.searchArticleByKeyword(it).let { baseApiResult ->
                     when (baseApiResult.status) {
                         Status.SUCCESS -> {
                             baseApiResult.data?.let { result ->
@@ -44,6 +46,12 @@ class SearchViewModel(private val defaultDispatcher: CoroutineDispatcher,
                     }
                 }
             }
+        }
+    }
+
+    fun insert(article: Article) {
+        viewModelScope.launch(defaultDispatcher) {
+            repositoryRoom.insertBookmark(article = article)
         }
     }
 }

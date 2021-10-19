@@ -9,4 +9,5 @@ val roomModule = module {
         NewsAppDatabase(androidApplication())
     }
     single(createdAtStart = false) { get<NewsAppDatabase>().userDao() }
+    single(createdAtStart = false) { get<NewsAppDatabase>().bookmarkDao() }
 }

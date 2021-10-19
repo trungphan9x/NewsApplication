@@ -42,7 +42,6 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
             if (!email.isNullOrEmpty() && !password.isNullOrEmpty() && !viewModel.userList.isNullOrEmpty() && viewModel.userList!!.any { it.email == email && it.password == password}) {
                 val currentUser = viewModel.userList!!.find { it.email == email && it.password == password }
                 getNav(binding.root).navigate(R.id.action_loginFragment_to_navigation_profile, bundleOf("user" to currentUser))
-                sharedPreference.setIsLogIn(true)
             } else {
                 Toast.makeText(requireContext(), "Your username or password is invalid!!!", Toast.LENGTH_SHORT).show()
             }

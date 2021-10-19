@@ -9,9 +9,11 @@ import miu.compro.cs743.myapplication.base.BaseViewModel
 import miu.compro.cs743.myapplication.model.enum.Status
 import miu.compro.cs743.myapplication.model.remote.response.Article
 import miu.compro.cs743.myapplication.model.repository.RemoteRepository
+import miu.compro.cs743.myapplication.model.repository.RoomRepository
 
 class NewsListViewModel(private val defaultDispatcher: CoroutineDispatcher,
-                        private val repository: RemoteRepository
+                        private val repositoryRemote: RemoteRepository,
+                        private val repositoryRoom: RoomRepository
                     ) : BaseViewModel() {
 
 
@@ -23,7 +25,7 @@ class NewsListViewModel(private val defaultDispatcher: CoroutineDispatcher,
     fun getArticlesByCategoryFromApi() {
         viewModelScope.launch (defaultDispatcher) {
             topicTab?.let {
-                repository.getArticleByCategory(it).let { baseApiResult ->
+                repositoryRemote.getArticleByCategory(it).let { baseApiResult ->
                     when (baseApiResult.status) {
                         Status.SUCCESS -> {
                             baseApiResult.data?.let { result ->
@@ -44,6 +46,12 @@ class NewsListViewModel(private val defaultDispatcher: CoroutineDispatcher,
                     }
                 }
             }
+        }
+    }
+
+    fun insert(article: Article) {
+        viewModelScope.launch(defaultDispatcher) {
+            repositoryRoom.insertBookmark(article = article)
         }
     }
 
