@@ -18,9 +18,9 @@ class RegisterViewModel(private val defaultDispatcher: CoroutineDispatcher,
 
     fun insertUserToRoom(user: User) {
         viewModelScope.launch (defaultDispatcher) {
-            _resultInsertUser.postValue(repository.insertUser(user))
+            repository.insertUser(user).let {
+                _resultInsertUser.postValue(it)
+            }
         }
     }
-
-
 }

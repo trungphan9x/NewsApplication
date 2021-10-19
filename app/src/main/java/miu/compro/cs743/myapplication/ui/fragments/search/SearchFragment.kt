@@ -18,6 +18,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.recyclerview.widget.LinearLayoutManager
 import miu.compro.cs743.myapplication.model.remote.response.Article
 import miu.compro.cs743.myapplication.ui.activity.main.MainActivity
 
@@ -25,7 +26,7 @@ import miu.compro.cs743.myapplication.ui.activity.main.MainActivity
 class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding::inflate),
     SearchView.OnQueryTextListener {
     private val searchViewModel: SearchViewModel by viewModel()
-    private var mainActivity: MainActivity? = null
+    private lateinit var photoAdapter: PhotoNewsAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,14 +39,8 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setRecyclerView()
         observeData()
-        if (activity is MainActivity) {
-            mainActivity = (activity as? MainActivity)
-        }
-        //initializeToolbar()
-
-//        val toolbar = mainActivity?.actionBar as Toolbar
-//        toolbar.setContentInsetsAbsolute(0,0)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -53,24 +48,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
         initializeSearchView(menu)
     }
 
-    private fun initializeToolbar() {
-
-        val toolbar = Toolbar(requireContext())
-        val layoutParams = LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.MATCH_PARENT, 168
-        )
-        toolbar.layoutParams = layoutParams
-//        toolbar.popupTheme = R.style.
-//        toolbar.setBackgroundColor(resources.getColor(R.color.colorPrimary))
-        toolbar.title = null
-        toolbar.visibility = View.VISIBLE
-        toolbar.setContentInsetsAbsolute(0, 0)
-
-        // Assuming in activity_main, you are using LinearLayout as root
-        binding.llHolderSearchFragment.addView(toolbar, 0)
-
-        mainActivity?.setSupportActionBar(toolbar)
-    }
 
     private fun initializeSearchView(menu: Menu?) {
         val search = menu?.findItem(R.id.menu_search)
@@ -99,11 +76,10 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
     }
 
     private fun observeData() {
-        binding.rvArticles.setHasFixedSize(true)
         searchViewModel.article.observe(viewLifecycleOwner, { articles ->
             articles?.let {
                 binding.tvErrorNotification.visibility = GONE
-                setRecyclerView(it)
+                photoAdapter.setItems(it)
             }
         })
 
@@ -113,8 +89,11 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
         })
     }
 
-    private fun setRecyclerView(articles: List<Article>) {
-        binding.rvArticles.adapter = PhotoNewsAdapter(articles).apply {
+    private fun setRecyclerView() {
+        binding.rvArticles.setHasFixedSize(true)
+        binding.rvArticles.layoutManager = LinearLayoutManager(context)
+
+        photoAdapter = PhotoNewsAdapter().apply {
             setOnItemClickListener { which, position, article, rootView ->
                 when (which) {
                     ITEM_CLICKED -> {
@@ -139,5 +118,26 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
                 }
             }
         }
+        binding.rvArticles.adapter = photoAdapter
+    }
+
+
+    private fun initializeToolbar() {
+
+        val toolbar = Toolbar(requireContext())
+        val layoutParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT, 168
+        )
+        toolbar.layoutParams = layoutParams
+//        toolbar.popupTheme = R.style.
+//        toolbar.setBackgroundColor(resources.getColor(R.color.colorPrimary))
+        toolbar.title = null
+        toolbar.visibility = View.VISIBLE
+        toolbar.setContentInsetsAbsolute(0, 0)
+
+        // Assuming in activity_main, you are using LinearLayout as root
+        binding.llHolderSearchFragment.addView(toolbar, 0)
+
+        //mainActivity?.setSupportActionBar(toolbar)
     }
 }

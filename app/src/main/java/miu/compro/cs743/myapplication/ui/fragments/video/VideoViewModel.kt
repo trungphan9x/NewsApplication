@@ -30,7 +30,9 @@ class VideoViewModel(private val defaultDispatcher: CoroutineDispatcher,
                         baseApiResult.data?.let { result ->
                             when (result.status) {
                                 "ok" -> {
-                                    _articles.postValue(result.articles)
+                                    result.articles?.let { articles->
+                                        _articles.postValue(articles)
+                                    }
                                 }
                                 else -> {
                                     _error.postValue(result.message)

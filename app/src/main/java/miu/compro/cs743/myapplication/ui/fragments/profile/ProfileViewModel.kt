@@ -12,18 +12,14 @@ import miu.compro.cs743.myapplication.model.roomdb.entity.User
 class ProfileViewModel(private val defaultDispatcher: CoroutineDispatcher,
                        private val repository: RoomRepository
 ) : BaseViewModel() {
-    init {
-        getUser()
-    }
 
-    var user: User? = null
+    private val _users : MutableLiveData<List<User>?> = MutableLiveData()
+    val users: LiveData<List<User>?> = _users
 
-    private val _users : MutableLiveData<List<User>> = MutableLiveData()
-    val users: LiveData<List<User>> = _users
-
-    private fun getUser() {
+    fun getUser() {
         viewModelScope.launch (defaultDispatcher){
-            _users.postValue(repository.getAllUsers())
+            val users = repository.getAllUsers()
+            _users.postValue(users)
         }
     }
 }

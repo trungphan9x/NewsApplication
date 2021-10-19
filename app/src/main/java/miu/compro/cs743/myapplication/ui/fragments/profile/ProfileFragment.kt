@@ -5,8 +5,6 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.widget.PopupMenu
 import androidx.navigation.fragment.navArgs
-import miu.compro.cs743.myapplication.NewsApplication.Companion.INSTANCE
-import miu.compro.cs743.myapplication.NewsApplication.Companion.applicationContext
 import miu.compro.cs743.myapplication.R
 import miu.compro.cs743.myapplication.base.BaseFragment
 import miu.compro.cs743.myapplication.databinding.FragmentProfileBinding
@@ -20,15 +18,17 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
     private val args: ProfileFragmentArgs by navArgs<ProfileFragmentArgs>()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setObserver()
+        getExtraDataFromLogin()
         setListener()
     }
 
-    private fun setObserver() {
-        viewModel.users.observe(viewLifecycleOwner, {
-            viewModel.user = it.firstOrNull()
-            setView()
-        })
+    private fun getExtraDataFromLogin() {
+        if(sharedPreference.getCurrentUser() == null) {
+            args.user?.let {
+                sharedPreference.setCurrentUser(it)
+            }
+        }
+        setView()
     }
 
     private fun setListener() {
@@ -56,7 +56,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
                 getNav(binding.root).navigate(R.id.action_navigation_profile_to_loginFragment)
             }
             true -> {
-                when (viewModel.user) {
+                when (sharedPreference.getCurrentUser()) {
                     null -> {
                         Toast.makeText(
                             requireContext(),
@@ -68,8 +68,8 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
                         }
                     }
                     else -> {
-                        val user = viewModel.user
-                        viewModel.user?.let {
+                        val user = sharedPreference.getCurrentUser()
+                        user?.let {
                             binding.tvEmail.text = it.email
                             "${it.firstname} ${it.lastname}".also {
                                 binding.tvFullName.text = it

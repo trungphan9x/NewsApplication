@@ -14,16 +14,13 @@ class NewsListViewModel(private val defaultDispatcher: CoroutineDispatcher,
                         private val repository: RemoteRepository
                     ) : BaseViewModel() {
 
-    init {
-        getArticlesByCategoryFromApi()
-    }
 
     private val _articles = MutableLiveData<List<Article>?>()
     val articles: LiveData<List<Article>?> = _articles
 
     var topicTab: String? = null
 
-    private fun getArticlesByCategoryFromApi() {
+    fun getArticlesByCategoryFromApi() {
         viewModelScope.launch (defaultDispatcher) {
             topicTab?.let {
                 repository.getArticleByCategory(it).let { baseApiResult ->

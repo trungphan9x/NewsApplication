@@ -3,6 +3,7 @@ package miu.compro.cs743.myapplication.ui.fragments.newslist
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.recyclerview.widget.LinearLayoutManager
 import miu.compro.cs743.myapplication.base.BaseFragment
 import miu.compro.cs743.myapplication.databinding.FragmentNewsBinding
 import miu.compro.cs743.myapplication.model.remote.response.Article
@@ -12,11 +13,13 @@ import org.koin.android.viewmodel.ext.android.viewModel
 class NewsListFragment : BaseFragment<FragmentNewsBinding>(FragmentNewsBinding::inflate) {
 
     private val newsListViewModel: NewsListViewModel by viewModel()
-
+    private lateinit var photoAdapter: PhotoNewsAdapter
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setRecyclerView()
         getExtraData()
         setObserve()
+        newsListViewModel.getArticlesByCategoryFromApi()
     }
 
     private fun getExtraData() {
@@ -27,7 +30,7 @@ class NewsListFragment : BaseFragment<FragmentNewsBinding>(FragmentNewsBinding::
         newsListViewModel.articles.observe(viewLifecycleOwner, { articles ->
             articles?.let {
                 binding.tvErrorNotification.visibility = View.GONE
-                setRecyclerView(articles)
+                photoAdapter.setItems(articles)
             }
         })
 
@@ -37,9 +40,10 @@ class NewsListFragment : BaseFragment<FragmentNewsBinding>(FragmentNewsBinding::
         })
     }
 
-    private fun setRecyclerView(articles: List<Article>) {
+    private fun setRecyclerView() {
         binding.rvArticles.setHasFixedSize(true)
-        binding.rvArticles.adapter = PhotoNewsAdapter(articles).apply {
+        binding.rvArticles.layoutManager = LinearLayoutManager(context)
+        photoAdapter  = PhotoNewsAdapter().apply {
             setOnItemClickListener { which, position, article, rootView ->
                 when (which) {
                     ITEM_CLICKED -> {
@@ -61,6 +65,7 @@ class NewsListFragment : BaseFragment<FragmentNewsBinding>(FragmentNewsBinding::
                 }
             }
         }
+        binding.rvArticles.adapter = photoAdapter
     }
 
     companion object {

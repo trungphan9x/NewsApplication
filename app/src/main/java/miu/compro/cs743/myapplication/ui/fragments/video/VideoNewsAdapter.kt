@@ -17,12 +17,20 @@ import miu.compro.cs743.myapplication.ui.fragments.newslist.NewsListFragment.Com
 import miu.compro.cs743.myapplication.ui.fragments.newslist.NewsListFragment.Companion.SHARE_CLICKED
 
 //class VideoNewsAdapter(private val articles: List<Article>) : RecyclerView.Adapter<VideoNewsAdapter.ViewHolder>() {
-class VideoNewsAdapter(private val articles: List<Article>) : ListAdapter<Article, VideoNewsAdapter.ViewHolder>(DiffCallback) {
+class VideoNewsAdapter() : ListAdapter<Article, VideoNewsAdapter.ViewHolder>(DiffCallback) {
+
+    private val articles: ArrayList<Article> = arrayListOf()
 
     private var onItemClickListener: ((Int, Int, Article, View) -> Unit)? = null
 
     fun setOnItemClickListener(onItemClickListener: ((Int, Int, Article, View) -> Unit)) {
         this.onItemClickListener = onItemClickListener
+    }
+
+    fun setItems(items: List<Article>) {
+        this.articles.clear()
+        this.articles.addAll(items)
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VideoNewsAdapter.ViewHolder {

@@ -18,13 +18,16 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.getUser()
         setObserver()
+        setListener()
     }
 
     private fun setObserver() {
         viewModel.users.observe(viewLifecycleOwner, {
-            viewModel.user = it.firstOrNull()
-            setListener()
+            it?.let {
+                viewModel.userList = it
+            }
         })
     }
 
@@ -36,9 +39,9 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
         binding.buttonSignIn.setOnClickListener {
             val email = binding.edtEmailAddress.text.toString().trim()
             val password = binding.edtPassword.text.toString().trim()
-            if (!email.isNullOrEmpty() && !password.isNullOrEmpty() && viewModel.user!=null && viewModel.user?.email?.trim()==email && viewModel.user?.password?.trim()==password) {
-//                val action = LoginFragmentDirections.actionLoginFragmentToNavigationProfile(user)
-                getNav(binding.root).navigate(R.id.action_loginFragment_to_navigation_profile)
+            if (!email.isNullOrEmpty() && !password.isNullOrEmpty() && !viewModel.userList.isNullOrEmpty() && viewModel.userList!!.any { it.email == email && it.password == password}) {
+                val currentUser = viewModel.userList!!.find { it.email == email && it.password == password }
+                getNav(binding.root).navigate(R.id.action_loginFragment_to_navigation_profile, bundleOf("user" to currentUser))
                 sharedPreference.setIsLogIn(true)
             } else {
                 Toast.makeText(requireContext(), "Your username or password is invalid!!!", Toast.LENGTH_SHORT).show()
