@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import miu.compro.cs743.myapplication.R
 import miu.compro.cs743.myapplication.databinding.ItemNewsPhotoBinding
+import miu.compro.cs743.myapplication.injection.GlideApp
 import miu.compro.cs743.myapplication.model.remote.response.Article
 import miu.compro.cs743.myapplication.ui.fragments.newslist.NewsListFragment.Companion.BOOKMARK_CLICKED
 import miu.compro.cs743.myapplication.ui.fragments.newslist.NewsListFragment.Companion.ITEM_CLICKED
@@ -38,7 +39,7 @@ class PhotoNewsAdapter(private val articles: List<Article>) : ListAdapter<Articl
         holder.binding.tvSource.text = articles[position].source.name
         holder.binding.tvPublishedDate.text = articles[position].publishedAtModified
 
-        Glide.with(holder.binding.root.context)
+        GlideApp.with(holder.binding.root.context)
             .load(articles[position].urlToImage)
             .placeholder(R.drawable.default_image)
             .into(holder.binding.ivImage)
