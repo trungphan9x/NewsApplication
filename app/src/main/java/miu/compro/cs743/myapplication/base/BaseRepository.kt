@@ -9,7 +9,7 @@ abstract class BaseRepository : KoinComponent {
 
     suspend fun <T> safeApi(callApi: suspend () -> T): BaseApiResult<T> {
         try {
-            callApi.invoke().let {response ->
+            callApi.invoke().let { response ->
                 return responseHandler.handleSuccess(response)
             }
         } catch (ex: Exception) {

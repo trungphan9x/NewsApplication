@@ -1,5 +1,6 @@
 package miu.compro.cs743.myapplication.base
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -26,4 +27,17 @@ abstract class BaseFragment<VB: ViewBinding>(private val inflate: Inflate<VB>) :
     }
 
     fun getNav(view: View) = Navigation.findNavController(view)
+
+    fun share(url: String) {
+        val share = Intent.createChooser(Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT, "This is so hot: $url")
+            type = "text/plain"
+
+            // (Optional) Here we're setting the title of the content
+            putExtra(Intent.EXTRA_TITLE, "this is the latest news")
+
+        }, null)
+        startActivity(share)
+    }
 }

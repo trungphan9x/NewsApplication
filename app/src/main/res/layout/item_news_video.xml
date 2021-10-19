@@ -51,6 +51,17 @@
             android:text="CNN"/>
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_dot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/sf_compactdisplay_medium"
+            android:textSize="20sp"
+            android:paddingStart="2dp"
+            android:paddingEnd="2dp"
+            android:textColor="#999999"
+            android:text="."/>
+
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_published_date"
             android:layout_weight="1"
             tools:ignore="NestedWeights"
@@ -59,7 +70,6 @@
             android:fontFamily="@font/sf_compact_regular"
             android:textSize="12sp"
             android:textColor="#999999"
-            android:paddingStart="5dp"
             android:text="Convolutional Neural Network"/>
     </LinearLayout>
 

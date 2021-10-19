@@ -9,7 +9,7 @@ import com.bumptech.glide.module.AppGlideModule
 import com.bumptech.glide.request.RequestOptions
 
 @GlideModule
-class NewsAppGlideModule : AppGlideModule() {
+class CustomGlideModuleV4 : AppGlideModule() {
     override fun applyOptions(context: Context, builder: GlideBuilder) {
         super.applyOptions(context, builder)
         val diskCacheSizeBytes = 1024 * 1024 * 2000 // 2000 MB

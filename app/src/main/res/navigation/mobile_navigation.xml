@@ -37,6 +37,9 @@
             app:argType="miu.compro.cs743.myapplication.model.roomdb.entity.User"
             android:defaultValue="@null"
             app:nullable="true"/>
+        <action
+            android:id="@+id/action_navigation_profile_self"
+            app:destination="@id/navigation_profile" />
     </fragment>
 
     <fragment

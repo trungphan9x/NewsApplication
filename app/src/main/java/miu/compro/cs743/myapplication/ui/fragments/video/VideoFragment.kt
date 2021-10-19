@@ -23,8 +23,14 @@ class VideoFragment : BaseFragment<FragmentVideoBinding>(FragmentVideoBinding::i
     private fun setObserve() {
         videoViewModel.articles.observe(viewLifecycleOwner, { articles ->
             articles?.let {
+                binding.tvErrorNotification.visibility = View.GONE
                 setRecyclerView(articles)
             }
+        })
+
+        videoViewModel.error.observe(viewLifecycleOwner, {
+            binding.tvErrorNotification.visibility = View.VISIBLE
+            binding.tvErrorNotification.text = it
         })
     }
 
@@ -44,7 +50,9 @@ class VideoFragment : BaseFragment<FragmentVideoBinding>(FragmentVideoBinding::i
 
                     }
                     SHARE_CLICKED -> {
-
+                        article.url?.let {
+                            share(article.url)
+                        }
                     }
                 }
             }

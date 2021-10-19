@@ -32,7 +32,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
                 val user = User(firstname, lastname, email, password)
                 registerVM.insertUserToRoom(user)
             } else {
-                Toast.makeText(requireContext(), "Any field was left empty!!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "You need to fill in all fields above!", Toast.LENGTH_SHORT).show()
             }
         }
     }

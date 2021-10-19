@@ -1,15 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-<androidx.recyclerview.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:id="@+id/rv_articles"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:layout_marginLeft="16dp"
-android:layout_marginRight="16dp"
-app:layoutManager="LinearLayoutManager"
-tools:context=".ui.fragments.newslist.NewsListFragment"
-tools:listitem="@layout/item_news_photo"
-android:fitsSystemWindows="true"
-android:paddingBottom="60dp" />
+    <TextView
+        android:id="@+id/tv_error_notification"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|center_vertical"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:visibility="gone"
+        tools:text="TextView" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_articles"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:fitsSystemWindows="true"
+        android:paddingBottom="60dp"
+        app:layoutManager="LinearLayoutManager"
+        tools:context=".ui.fragments.newslist.NewsListFragment"
+        tools:listitem="@layout/item_news_photo" />
+</LinearLayout>

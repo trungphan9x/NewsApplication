@@ -35,14 +35,14 @@ class NewsListViewModel(private val defaultDispatcher: CoroutineDispatcher,
                                         _articles.postValue(result.articles)
                                     }
                                     else -> {
-                                        _articles.postValue(null)
+                                        _error.postValue(result.message)
                                     }
                                 }
                             }
                         }
 
                         Status.ERROR -> {
-                            _articles.postValue(null)
+                            _error.postValue(baseApiResult.message)
                         }
                     }
                 }

@@ -26,8 +26,14 @@ class NewsListFragment : BaseFragment<FragmentNewsBinding>(FragmentNewsBinding::
     private fun setObserve() {
         newsListViewModel.articles.observe(viewLifecycleOwner, { articles ->
             articles?.let {
+                binding.tvErrorNotification.visibility = View.GONE
                 setRecyclerView(articles)
             }
+        })
+
+        newsListViewModel.error.observe(viewLifecycleOwner, {
+            binding.tvErrorNotification.visibility = View.VISIBLE
+            binding.tvErrorNotification.text = it
         })
     }
 
@@ -48,7 +54,9 @@ class NewsListFragment : BaseFragment<FragmentNewsBinding>(FragmentNewsBinding::
 
                     }
                     SHARE_CLICKED -> {
-
+                        article.url?.let {
+                            share(article.url)
+                        }
                     }
                 }
             }

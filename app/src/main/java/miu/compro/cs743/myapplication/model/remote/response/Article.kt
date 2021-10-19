@@ -11,4 +11,7 @@ data class Article(
     val title: String?,
     val url: String?,
     val urlToImage: String?
-) : Serializable
+) : Serializable {
+    val publishedAtModified: String?
+        get() = publishedAt?.replace("T", " ")?.removeRange(16,20)
+}

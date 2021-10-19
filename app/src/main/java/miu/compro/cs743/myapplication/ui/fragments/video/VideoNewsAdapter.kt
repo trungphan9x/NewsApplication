@@ -37,7 +37,7 @@ class VideoNewsAdapter(private val articles: List<Article>) : ListAdapter<Articl
     override fun onBindViewHolder(holder: VideoNewsAdapter.ViewHolder, position: Int) {
         holder.binding.tvTitle.text = articles[position].title
         holder.binding.tvSource.text = articles[position].source.name
-        holder.binding.tvPublishedDate.text = articles[position].publishedAt
+        holder.binding.tvPublishedDate.text = articles[position].publishedAtModified
 
         Glide.with(holder.binding.root.context)
             .load(articles[position].urlToImage)

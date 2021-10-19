@@ -13,5 +13,4 @@ abstract class BaseActivity<B : ViewBinding>(val bindingFactory: (LayoutInflater
         binding = bindingFactory(layoutInflater)
         setContentView(binding.root)
     }
-
 }

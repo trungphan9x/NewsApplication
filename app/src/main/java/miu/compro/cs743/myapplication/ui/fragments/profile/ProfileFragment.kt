@@ -3,7 +3,10 @@ package miu.compro.cs743.myapplication.ui.fragments.profile
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.widget.PopupMenu
 import androidx.navigation.fragment.navArgs
+import miu.compro.cs743.myapplication.NewsApplication.Companion.INSTANCE
+import miu.compro.cs743.myapplication.NewsApplication.Companion.applicationContext
 import miu.compro.cs743.myapplication.R
 import miu.compro.cs743.myapplication.base.BaseFragment
 import miu.compro.cs743.myapplication.databinding.FragmentProfileBinding
@@ -18,6 +21,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setObserver()
+        setListener()
     }
 
     private fun setObserver() {
@@ -25,6 +29,25 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
             viewModel.user = it.firstOrNull()
             setView()
         })
+    }
+
+    private fun setListener() {
+        binding.ivSetting.setOnClickListener {
+            PopupMenu(requireActivity(), it).apply {
+                menuInflater.inflate(R.menu.setting_popup_menu, this.menu)
+                setOnMenuItemClickListener {
+                    when(it.itemId) {
+                        R.id.logout -> {
+                            sharedPreference.removeAllData()
+                            getNav(binding.root).navigate(R.id.action_navigation_profile_self)
+                            return@setOnMenuItemClickListener true
+                        }
+                        else -> return@setOnMenuItemClickListener false
+                    }
+                }
+                show()
+            }
+        }
     }
 
     private fun setView() {

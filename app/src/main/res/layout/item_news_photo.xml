@@ -33,15 +33,14 @@
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_title"
                         android:layout_width="match_parent"
-                        android:textColor="@color/text_default"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="16dp"
-                        android:layout_marginStart="10dp"
-                        android:lineSpacingExtra="1.5dp"
-                        android:textSize="16sp"
                         android:ellipsize="end"
-                        android:maxLines="3"
                         android:fontFamily="@font/sf_pro_text_semibold"
+                        android:lineSpacingExtra="1.5dp"
+                        android:maxLines="3"
+                        android:textColor="@color/text_default"
+                        android:textSize="16sp"
                         tools:text="TSMC and Sony considering joint chip factory, Japan gov't to help -Nikkei - Reuters" />
                 </LinearLayout>
 
@@ -88,9 +87,19 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/sf_compactdisplay_medium"
                     android:textSize="12sp"
-                    android:layout_marginStart="10dp"
                     android:textColor="#999999"
                     android:text="CNN"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_dot"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sf_compactdisplay_medium"
+                    android:textSize="20sp"
+                    android:paddingStart="2dp"
+                    android:paddingEnd="2dp"
+                    android:textColor="#5E5B5B"
+                    android:text="."/>
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_published_date"
@@ -99,9 +108,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/sf_compact_regular"
-                    android:textSize="12sp"
+                    android:textSize="11sp"
                     android:textColor="#999999"
-                    android:paddingStart="5dp"
                     android:text="Convolutional Neural Network"/>
             </LinearLayout>
             <LinearLayout

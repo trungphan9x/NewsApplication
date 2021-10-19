@@ -3,6 +3,8 @@ package miu.compro.cs743.myapplication.ui.fragments.search
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import androidx.appcompat.widget.SearchView
 import miu.compro.cs743.myapplication.R
 import miu.compro.cs743.myapplication.base.BaseFragment
@@ -16,10 +18,12 @@ import org.koin.android.viewmodel.ext.android.viewModel
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import miu.compro.cs743.myapplication.model.remote.response.Article
 import miu.compro.cs743.myapplication.ui.activity.main.MainActivity
 
 
-class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding::inflate), SearchView.OnQueryTextListener {
+class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding::inflate),
+    SearchView.OnQueryTextListener {
     private val searchViewModel: SearchViewModel by viewModel()
     private var mainActivity: MainActivity? = null
 
@@ -45,7 +49,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.option_menu_search,menu)
+        inflater.inflate(R.menu.option_menu_search, menu)
         initializeSearchView(menu)
     }
 
@@ -60,7 +64,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
 //        toolbar.setBackgroundColor(resources.getColor(R.color.colorPrimary))
         toolbar.title = null
         toolbar.visibility = View.VISIBLE
-        toolbar.setContentInsetsAbsolute(0,0)
+        toolbar.setContentInsetsAbsolute(0, 0)
 
         // Assuming in activity_main, you are using LinearLayout as root
         binding.llHolderSearchFragment.addView(toolbar, 0)
@@ -98,27 +102,42 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
         binding.rvArticles.setHasFixedSize(true)
         searchViewModel.article.observe(viewLifecycleOwner, { articles ->
             articles?.let {
-                binding.rvArticles.adapter = PhotoNewsAdapter(articles).apply {
-                    setOnItemClickListener { which, position, article, rootView ->
-                        when (which) {
-                            ITEM_CLICKED -> {
-                                val intent = Intent(requireActivity(), ArticleDetailActivity::class.java).apply {
-                                    putExtra("article", article)
-                                    putExtra("isVideo", false)
-                                }
-                                startActivity(intent)
+                binding.tvErrorNotification.visibility = GONE
+                setRecyclerView(it)
+            }
+        })
 
-                            }
-                            BOOKMARK_CLICKED -> {
+        searchViewModel.error.observe(viewLifecycleOwner, {
+            binding.tvErrorNotification.visibility = VISIBLE
+            binding.tvErrorNotification.text = it
+        })
+    }
 
-                            }
-                            SHARE_CLICKED -> {
+    private fun setRecyclerView(articles: List<Article>) {
+        binding.rvArticles.adapter = PhotoNewsAdapter(articles).apply {
+            setOnItemClickListener { which, position, article, rootView ->
+                when (which) {
+                    ITEM_CLICKED -> {
+                        val intent = Intent(
+                            requireActivity(),
+                            ArticleDetailActivity::class.java
+                        ).apply {
+                            putExtra("article", article)
+                            putExtra("isVideo", false)
+                        }
+                        startActivity(intent)
 
-                            }
+                    }
+                    BOOKMARK_CLICKED -> {
+
+                    }
+                    SHARE_CLICKED -> {
+                        article.url?.let {
+                            share(article.url)
                         }
                     }
                 }
             }
-        })
+        }
     }
 }
