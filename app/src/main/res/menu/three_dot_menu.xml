@@ -4,6 +4,6 @@
     <!--name space is needed to use app:showAsAction="ifRoom“-->
     <item
         android:id="@+id/menu_bookmark"
-        android:title="Bookmark"/>
+        android:title="@string/bookmark"/>
 
 </menu>

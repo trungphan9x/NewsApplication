@@ -5,27 +5,23 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import miu.compro.cs743.myapplication.NewsApplication
 import miu.compro.cs743.myapplication.R
 import miu.compro.cs743.myapplication.base.BaseActivity
 import miu.compro.cs743.myapplication.databinding.ActivityMainBinding
 import miu.compro.cs743.myapplication.model.enum.CurrentTab
 import miu.compro.cs743.myapplication.util.*
-import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
+import java.util.*
 
 class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
 
     private val navController by lazy { findNavController(R.id.nav_host_fragment_activity_main) }
-    private val sharedPreference: NewsAppSharedPreference by inject()
-    private val mainViewModel by viewModel<MainViewModel> {
-        parametersOf(navController)
-    }
-
+    private val mainViewModel by viewModel<MainViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setListener()
+        setObserver()
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(
@@ -38,16 +34,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         binding.navView.setupWithNavController(navController)
-
-//        actionBar!!.setDisplayShowCustomEnabled(true)
-//        actionBar!!.displayOptions = DISPLAY_SHOW_CUSTOM
-//        actionBar!!.setDisplayHomeAsUpEnabled(false)
-//        actionBar!!.setDisplayShowHomeEnabled(false)
-//        actionBar!!.setDisplayUseLogoEnabled(false)
-
-//        val customView: View = layoutInflater.inflate(R.layout.action_bar, null)
-//        actionBar.setCustomView(customView)
-//        customView.parent.setContentInsetsAbsolute(0, 0)
     }
 
     private fun setListener() {
@@ -84,5 +70,13 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
                 }
             }
         }
+    }
+
+    private fun setObserver() {
+        mainViewModel.selectedLanguage.observe(this, {
+            it?.let {
+                changeLanguage(it)
+            }
+        })
     }
 }

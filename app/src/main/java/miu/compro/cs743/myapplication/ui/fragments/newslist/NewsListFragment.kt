@@ -6,10 +6,13 @@ import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import miu.compro.cs743.myapplication.NewsApplication.Companion.applicationContext
+import miu.compro.cs743.myapplication.R
 import miu.compro.cs743.myapplication.base.BaseFragment
 import miu.compro.cs743.myapplication.databinding.FragmentNewsBinding
 import miu.compro.cs743.myapplication.model.remote.response.Article
 import miu.compro.cs743.myapplication.ui.activity.articledetail.ArticleDetailActivity
+import miu.compro.cs743.myapplication.ui.activity.articledetail.ArticleDetailActivity.Companion.DETAIL_ARTICLE
+import miu.compro.cs743.myapplication.ui.activity.articledetail.ArticleDetailActivity.Companion.DETAIL_IS_VIDEO
 import miu.compro.cs743.myapplication.util.NewsAppSharedPreference
 import miu.compro.cs743.myapplication.util.getCurrentUser
 import org.koin.android.ext.android.inject
@@ -19,7 +22,6 @@ class NewsListFragment : BaseFragment<FragmentNewsBinding>(FragmentNewsBinding::
 
     private val newsListViewModel: NewsListViewModel by viewModel()
     private lateinit var photoAdapter: PhotoNewsAdapter
-    private val sharedPreference: NewsAppSharedPreference by inject()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setRecyclerView()
@@ -54,8 +56,8 @@ class NewsListFragment : BaseFragment<FragmentNewsBinding>(FragmentNewsBinding::
                 when (which) {
                     ITEM_CLICKED -> {
                         val intent = Intent(requireActivity(), ArticleDetailActivity::class.java).apply {
-                            putExtra("article", article)
-                            putExtra("isVideo", false)
+                            putExtra(DETAIL_ARTICLE, article)
+                            putExtra(DETAIL_IS_VIDEO, false)
                         }
                         startActivity(intent)
 
@@ -64,7 +66,7 @@ class NewsListFragment : BaseFragment<FragmentNewsBinding>(FragmentNewsBinding::
                        if(applicationContext().getCurrentUser() != null) {
                            newsListViewModel.insert(article)
                        } else {
-                           Toast.makeText(requireContext(), "You need to log in to save the bookmark", Toast.LENGTH_SHORT).show()
+                           Toast.makeText(requireContext(), getString(R.string.news_list_noti_login_to_save_bookmark), Toast.LENGTH_SHORT).show()
                        }
                     }
                     SHARE_CLICKED -> {

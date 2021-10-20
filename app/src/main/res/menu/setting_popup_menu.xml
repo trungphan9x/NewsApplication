@@ -2,9 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/logout"
-        android:title="Log out"/>
+        android:title="@string/setting_delete_all_bookmark"/>
 
     <item
         android:id="@+id/delete_all_bookmark"
-        android:title="Delete all bookmarks"/>
+        android:title="@string/setting_delete_all_bookmarks"/>
 </menu>

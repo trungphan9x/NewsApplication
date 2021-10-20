@@ -7,14 +7,11 @@ import androidx.core.os.bundleOf
 import miu.compro.cs743.myapplication.R
 import miu.compro.cs743.myapplication.base.BaseFragment
 import miu.compro.cs743.myapplication.databinding.FragmentLoginBinding
-import miu.compro.cs743.myapplication.util.NewsAppSharedPreference
-import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::inflate) {
 
     private val viewModel: LoginViewModel by viewModel()
-    private val sharedPreference: NewsAppSharedPreference by inject()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -43,7 +40,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
                 val currentUser = viewModel.userList!!.find { it.email == email && it.password == password }
                 getNav(binding.root).navigate(R.id.action_loginFragment_to_navigation_profile, bundleOf("user" to currentUser))
             } else {
-                Toast.makeText(requireContext(), "Your username or password is invalid!!!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), getString(R.string.login_username_pass_invalid), Toast.LENGTH_SHORT).show()
             }
         }
     }

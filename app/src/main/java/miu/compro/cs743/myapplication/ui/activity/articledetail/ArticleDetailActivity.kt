@@ -1,11 +1,14 @@
 package miu.compro.cs743.myapplication.ui.activity.articledetail
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.webkit.WebViewClient
 import android.widget.MediaController
-import com.bumptech.glide.Glide
+import androidx.core.app.ActivityOptionsCompat
 import miu.compro.cs743.myapplication.base.BaseActivity
 import miu.compro.cs743.myapplication.databinding.ActivityArticleDetailBinding
 import miu.compro.cs743.myapplication.model.remote.response.Article
@@ -36,12 +39,12 @@ class ArticleDetailActivity : BaseActivity<ActivityArticleDetailBinding>(Activit
     }
 
     private fun getExtraData() {
-        if(intent.hasExtra("article")) {
-            articleDetailVM.article = intent.getSerializableExtra("article") as? Article
+        if(intent.hasExtra(DETAIL_ARTICLE)) {
+            articleDetailVM.article = intent.getSerializableExtra(DETAIL_ARTICLE) as? Article
         }
 
-        if(intent.hasExtra("isVideo")) {
-            articleDetailVM.isVideo = intent.getBooleanExtra("isVideo", false)
+        if(intent.hasExtra(DETAIL_IS_VIDEO)) {
+            articleDetailVM.isVideo = intent.getBooleanExtra(DETAIL_IS_VIDEO, false)
         }
     }
 
@@ -83,6 +86,30 @@ class ArticleDetailActivity : BaseActivity<ActivityArticleDetailBinding>(Activit
                 }
             }
 
+        }
+    }
+
+    companion object {
+        private const val DETAIL_ANIMATION_NAME = "detail_animation_mame"
+        const val DETAIL_ARTICLE = "article"
+        const val DETAIL_IS_VIDEO = "isVideo"
+        fun startActivity(activity: Activity?, view: View, article: Article, isVideo: Boolean) {
+
+            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                activity!!,
+                view,
+                "transition")
+
+            Intent(activity, ArticleDetailActivity::class.java).apply {
+                this.putExtra(DETAIL_ANIMATION_NAME, "transition")
+                this.putExtra(DETAIL_ARTICLE, article)
+                this.putExtra(DETAIL_IS_VIDEO, isVideo)
+            }.also {
+//                activity.startActivity(it, options.toBundle())
+                activity.startActivity(it)
+
+                //activity.overridePendingTransition(R.anim.bounce, R.anim.fade_in)
+            }
         }
     }
 }

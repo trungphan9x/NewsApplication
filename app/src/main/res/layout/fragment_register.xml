@@ -28,7 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:text="Create Your Account"
+            android:text="@string/register_create_your_account"
             android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="28dp"
             android:layout_marginTop="20dp"
-            android:text="* required field"
+            android:text="@string/register_required_field"
             android:textSize="12sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
@@ -51,7 +51,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:text="First name*"
+            android:text="@string/register_first_name"
             android:textSize="15sp"
             app:layout_constraintStart_toStartOf="@+id/tvRequiredField"
             app:layout_constraintTop_toBottomOf="@+id/tvRequiredField" />
@@ -75,7 +75,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Last name*"
+            android:text="@string/register_last_name"
             android:textSize="15sp"
             app:layout_constraintStart_toStartOf="@+id/edtFirstname"
             app:layout_constraintTop_toBottomOf="@+id/edtFirstname" />
@@ -99,7 +99,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Email address*"
+            android:text="@string/register_email_address"
             android:textSize="15sp"
             app:layout_constraintStart_toStartOf="@+id/edtLastname"
             app:layout_constraintTop_toBottomOf="@+id/edtLastname" />
@@ -123,7 +123,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Password*"
+            android:text="@string/register_password"
             android:textSize="15sp"
             app:layout_constraintStart_toStartOf="@+id/edtEmailAddress"
             app:layout_constraintTop_toBottomOf="@+id/edtEmailAddress" />
@@ -146,7 +146,7 @@
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/purple_500"
-            android:text="Create Account"
+            android:text="@string/register_create_account"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

@@ -5,22 +5,19 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
-import miu.compro.cs743.myapplication.NewsApplication
 import miu.compro.cs743.myapplication.NewsApplication.Companion.applicationContext
+import miu.compro.cs743.myapplication.R
 import miu.compro.cs743.myapplication.base.BaseFragment
 import miu.compro.cs743.myapplication.databinding.FragmentVideoBinding
 import miu.compro.cs743.myapplication.ui.activity.articledetail.ArticleDetailActivity
 import miu.compro.cs743.myapplication.ui.fragments.newslist.NewsListFragment.Companion.BOOKMARK_CLICKED
 import miu.compro.cs743.myapplication.ui.fragments.newslist.NewsListFragment.Companion.ITEM_CLICKED
 import miu.compro.cs743.myapplication.ui.fragments.newslist.NewsListFragment.Companion.SHARE_CLICKED
-import miu.compro.cs743.myapplication.util.NewsAppSharedPreference
 import miu.compro.cs743.myapplication.util.getCurrentUser
-import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class VideoFragment : BaseFragment<FragmentVideoBinding>(FragmentVideoBinding::inflate) {
     private val videoViewModel: VideoViewModel by viewModel()
-    private val sharedPreference: NewsAppSharedPreference by inject()
     private lateinit var videoAdapter: VideoNewsAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -50,17 +47,13 @@ class VideoFragment : BaseFragment<FragmentVideoBinding>(FragmentVideoBinding::i
             setOnItemClickListener { which, position, article, rootView ->
                 when (which) {
                     ITEM_CLICKED -> {
-                        val intent = Intent(requireActivity(), ArticleDetailActivity::class.java).apply {
-                            putExtra("article", article)
-                            putExtra("isVideo", true)
-                        }
-                        startActivity(intent)
+                        ArticleDetailActivity.startActivity(requireActivity(), rootView, article, isVideo = true)
                     }
                     BOOKMARK_CLICKED -> {
                         if(applicationContext().getCurrentUser() != null) {
                             videoViewModel.insert(article)
                         } else {
-                            Toast.makeText(requireContext(), "You need to log in to save the bookmark", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(requireContext(), getString(R.string.news_list_noti_login_to_save_bookmark), Toast.LENGTH_SHORT).show()
                         }
                     }
                     SHARE_CLICKED -> {

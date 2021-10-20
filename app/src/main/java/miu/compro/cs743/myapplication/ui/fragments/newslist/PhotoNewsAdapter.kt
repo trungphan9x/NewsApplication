@@ -65,7 +65,7 @@ class PhotoNewsAdapter() : ListAdapter<Article, PhotoNewsAdapter.ViewHolder>(Dif
                 inflate(R.menu.three_dot_menu)
                 this.menu.findItem(R.id.menu_bookmark).apply {
                     when(applicationContext().getCurrentTab()) {
-                        CurrentTab.PROFILE.name -> this.title = "Delete this Bookmark"
+                        CurrentTab.PROFILE.name -> this.title = applicationContext().getString(R.string.profile_delete_bookmark)
                     }
                 }
                 setOnMenuItemClickListener {

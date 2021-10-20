@@ -5,7 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
+import miu.compro.cs743.myapplication.R
 import miu.compro.cs743.myapplication.base.BaseViewModel
+import miu.compro.cs743.myapplication.model.data.Language
 import miu.compro.cs743.myapplication.model.remote.response.Article
 import miu.compro.cs743.myapplication.model.repository.RoomRepository
 
@@ -40,5 +42,13 @@ class ProfileViewModel(private val defaultDispatcher: CoroutineDispatcher,
                 getAllBookmark()
             }
         }
+    }
+
+    fun loadLanguage(): ArrayList<Language> {
+        return arrayListOf(
+            Language(R.drawable.us, "English", "en"),
+            Language(R.drawable.`in`, "Tamil", "ta"),
+            Language(R.drawable.vn, "Vietnamese", "vi")
+        )
     }
 }

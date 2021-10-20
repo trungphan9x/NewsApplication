@@ -32,7 +32,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
                 val user = User(firstname, lastname, email, password)
                 registerVM.insertUserToRoom(user)
             } else {
-                Toast.makeText(requireContext(), "You need to fill in all fields above!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), getString(R.string.register_must_fill_in_all_fields), Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -40,7 +40,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
     private fun setObserver() {
         registerVM.resultInsertUser.observe(viewLifecycleOwner, {
             it?.let {
-                Toast.makeText(requireContext(), "Congrats!! You signed up successfully!!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), getString(R.string.register_sign_up_success), Toast.LENGTH_SHORT).show()
                 getNav(binding.root).navigate(R.id.action_registerFragment_to_loginFragment)
             }
         })
