@@ -37,7 +37,7 @@
     <string name="setting_delete_all_bookmark">Log out</string>
     <string name="setting_delete_all_bookmarks">Delete all bookmarks</string>
     <string name="bookmark">Bookmark</string>
-    <string name="share_content">\"This is so hot: \"</string>
+    <string name="share_content">This is so hot: </string>
     <string name="share_title">this is the latest news</string>
     <string name="tab_genral">general</string>
     <string name="tab_business">business</string>
@@ -51,4 +51,8 @@
     <string name="profile_delete_bookmark">Delete</string>
     <string name="register_must_fill_in_all_fields">You need to fill in all fields above!</string>
     <string name="register_sign_up_success">Congrats!! You signed up successfully!!</string>
+    <string name="notification_delete_all_bookmarks">Are you sure that you want to delete all bookmarks?</string>
+    <string name="notification_delete_one_bookmark">Do you want to delete this bookmark:\n</string>
+    <string name="notification_ok">OK</string>
+    <string name="notification_cancel">Cancel</string>
 </resources>

@@ -24,10 +24,7 @@ import miu.compro.cs743.myapplication.ui.activity.main.MainActivity
 import miu.compro.cs743.myapplication.ui.activity.main.MainViewModel
 import miu.compro.cs743.myapplication.ui.fragments.newslist.NewsListFragment
 import miu.compro.cs743.myapplication.ui.fragments.newslist.PhotoNewsAdapter
-import miu.compro.cs743.myapplication.util.NewsAppSharedPreference
-import miu.compro.cs743.myapplication.util.getCurrentUser
-import miu.compro.cs743.myapplication.util.removeAllData
-import miu.compro.cs743.myapplication.util.setCurrentUser
+import miu.compro.cs743.myapplication.util.*
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -110,7 +107,9 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
                             return@setOnMenuItemClickListener true
                         }
                         R.id.delete_all_bookmark -> {
-                            viewModel.deleteAllBookmark()
+                            AppDialog.showDialog(requireContext(), getString(R.string.notification_delete_all_bookmarks)) {
+                                viewModel.deleteAllBookmark()
+                            }
                             return@setOnMenuItemClickListener true
                         }
                         else -> return@setOnMenuItemClickListener false
@@ -159,7 +158,9 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
 
                     }
                     NewsListFragment.UNBOOKMARK_CLICKED -> {
-                        viewModel.deleteBookmark(article)
+                        AppDialog.showDialog(requireContext(), getString(R.string.notification_delete_one_bookmark) + article.title) {
+                            viewModel.deleteBookmark(article)
+                        }
                     }
                     NewsListFragment.SHARE_CLICKED -> {
                         article.url?.let {
