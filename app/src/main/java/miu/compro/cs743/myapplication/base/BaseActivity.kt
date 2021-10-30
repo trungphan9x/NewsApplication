@@ -20,16 +20,16 @@ abstract class BaseActivity<B : ViewBinding>(val bindingFactory: (LayoutInflater
         setContentView(binding.root)
     }
 
-    fun changeLanguage(code: String) {
-        // return the resource's current configuration.
-        val config = resources.configuration
-        //Construct a locale from language and country.
-        val locale = Locale(code)
-        Locale.setDefault(locale)
-        config.locale = locale
-        /* Return the current display metrics that are in effect for this resource object
-        * A structure describing general information about a display, such as its size, density, and font scaling.*/
-        resources.updateConfiguration(config, resources.displayMetrics)
-        recreate()
-    }
+//    fun changeLanguage(code: String) {
+//        // return the resource's current configuration.
+//        val config = resources.configuration
+//        //Construct a locale from language and country.
+//        val locale = Locale(code)
+//        Locale.setDefault(locale)
+//        config.locale = locale
+//        /* Return the current display metrics that are in effect for this resource object
+//        * A structure describing general information about a display, such as its size, density, and font scaling.*/
+//        resources.updateConfiguration(config, resources.displayMetrics)
+//        recreate()
+//    }
 }

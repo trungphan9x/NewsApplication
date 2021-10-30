@@ -44,7 +44,7 @@ class VideoFragment : BaseFragment<FragmentVideoBinding>(FragmentVideoBinding::i
         binding.rvArticles.setHasFixedSize(true)
         binding.rvArticles.layoutManager = LinearLayoutManager(context)
         videoAdapter = VideoNewsAdapter().apply {
-            setOnItemClickListener { which, position, article, rootView ->
+            setOnItemClickListener { which, _, article, rootView ->
                 when (which) {
                     ITEM_CLICKED -> {
                         ArticleDetailActivity.startActivity(requireActivity(), rootView, article, isVideo = true)

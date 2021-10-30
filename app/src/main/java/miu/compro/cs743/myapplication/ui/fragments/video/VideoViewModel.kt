@@ -42,8 +42,7 @@ class VideoViewModel(private val defaultDispatcher: CoroutineDispatcher,
                             }
                         }
                     }
-
-                    Status.ERROR -> {
+                    else -> {
                         _error.postValue(baseApiResult.message)
                     }
                 }

@@ -1,9 +1,11 @@
 package miu.compro.cs743.myapplication.ui.activity.main
 
 import android.os.Bundle
+import android.view.View.GONE
+import android.view.View.VISIBLE
+import android.widget.SearchView
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import miu.compro.cs743.myapplication.R
 import miu.compro.cs743.myapplication.base.BaseActivity
@@ -11,72 +13,79 @@ import miu.compro.cs743.myapplication.databinding.ActivityMainBinding
 import miu.compro.cs743.myapplication.model.enum.CurrentTab
 import miu.compro.cs743.myapplication.util.*
 import org.koin.android.viewmodel.ext.android.viewModel
-import org.koin.core.parameter.parametersOf
-import java.util.*
 
-class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
+class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate),
+    SearchView.OnQueryTextListener {
 
     private val navController by lazy { findNavController(R.id.nav_host_fragment_activity_main) }
     private val mainViewModel by viewModel<MainViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setListener()
-        setObserver()
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
-        val appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.navigation_home,
-                R.id.navigation_search,
-                R.id.navigation_video,
-                R.id.navigation_profile
-            )
-        )
-        setupActionBarWithNavController(navController, appBarConfiguration)
+//        val appBarConfiguration = AppBarConfiguration(
+//            setOf(
+//                R.id.navigation_home,
+//                R.id.navigation_search,
+//                R.id.navigation_video,
+//                R.id.navigation_profile
+//            )
+//        )
+        //setupActionBarWithNavController(navController, appBarConfiguration)
         binding.navView.setupWithNavController(navController)
+    }
+
+
+    private fun initSearView() {
+        binding.searchView.apply {
+            isIconifiedByDefault = true
+            isFocusable = true
+            isIconified = false
+            requestFocusFromTouch()
+            setOnQueryTextListener(this@MainActivity)
+        }
     }
 
     private fun setListener() {
 
-        navController.addOnDestinationChangedListener { _, destination, arguments ->
+        mainViewModel.showKeyboard.observe(this, {
+            binding.root.showKeyboard()
+        })
+
+        navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
                 R.id.navigation_home -> {
-                    if(applicationContext.getCurrentTab() != CurrentTab.HOME.name) applicationContext.setCurrentTab(CurrentTab.HOME.name)
-                    supportActionBar?.isShowing?.let { isShow->
-                        if (isShow) supportActionBar?.hide()
-                    }
+                    applicationContext.setCurrentTab(CurrentTab.HOME.name)
+                    binding.appBar.visibility = GONE
                     binding.container.hideKeyboard()
 
                 }
                 R.id.navigation_search -> {
-                    if(applicationContext.getCurrentTab() != CurrentTab.SEARCH.name) applicationContext.setCurrentTab(CurrentTab.SEARCH.name)
-                    supportActionBar?.isShowing?.let { isShow->
-                        if (!isShow) supportActionBar?.show()
-                    }
+                    applicationContext.setCurrentTab(CurrentTab.SEARCH.name)
+                    binding.appBar.visibility = VISIBLE
+                    initSearView()
                 }
                 R.id.navigation_video -> {
-                    if(applicationContext.getCurrentTab() != CurrentTab.VIDEO.name) applicationContext.setCurrentTab(CurrentTab.VIDEO.name)
-                    supportActionBar?.isShowing?.let { isShow->
-                        if (isShow) supportActionBar?.hide()
-                    }
+                    applicationContext.setCurrentTab(CurrentTab.VIDEO.name)
+                    binding.appBar.visibility = GONE
                     binding.container.hideKeyboard()
                 }
                 R.id.navigation_profile -> {
-                    if(applicationContext.getCurrentTab() != CurrentTab.PROFILE.name) applicationContext.setCurrentTab(CurrentTab.PROFILE.name)
-                    supportActionBar?.isShowing?.let { isShow->
-                        if (isShow) supportActionBar?.hide()
-                    }
+                    applicationContext.setCurrentTab(CurrentTab.PROFILE.name)
+                    binding.appBar.visibility = GONE
                     binding.container.hideKeyboard()
                 }
             }
         }
     }
 
-    private fun setObserver() {
-        mainViewModel.selectedLanguage.observe(this, {
-            it?.let {
-                changeLanguage(it)
-            }
-        })
+    override fun onQueryTextSubmit(keyword: String?): Boolean {
+        mainViewModel.searchArticleByKeyword(keyword)
+        return false
+    }
+
+    override fun onQueryTextChange(p0: String?): Boolean {
+        return false
     }
 }

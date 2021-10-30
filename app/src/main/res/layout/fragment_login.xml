@@ -12,8 +12,8 @@
 
         <ImageView
             android:id="@+id/iv_logo"
-            android:layout_width="100dp"
-            android:layout_height="60dp"
+            android:layout_width="194dp"
+            android:layout_height="150dp"
             android:layout_marginTop="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -79,6 +79,7 @@
             android:autoLink="all"
             android:clickable="true"
             android:text="@string/login_forgot_password"
+            android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="@+id/edtPassword"
             app:layout_constraintTop_toBottomOf="@+id/edtPassword"
             android:focusable="true"/>
@@ -87,14 +88,17 @@
             android:id="@+id/button_sign_in"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:layout_marginBottom="20dp"
-            android:backgroundTint="@color/purple_500"
+            android:backgroundTint="@color/black"
             android:text="@string/login_sign_in"
-            android:layout_marginTop="50dp"
-            app:layout_constraintTop_toBottomOf="@id/tv_forgot_password"
+            android:textColor="#FFFFFF"
             app:layout_constraintBottom_toTopOf="@+id/tv_dont_have_Account"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintHorizontal_bias="0.495"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_forgot_password"
+            app:layout_constraintVertical_bias="0.0" />
 
         <View
             android:layout_width="300dp"
@@ -120,7 +124,6 @@
             app:layout_constraintStart_toStartOf="parent" />
 
 
-
         <Button
             android:id="@+id/btn_create_new_account"
             android:layout_width="300dp"
@@ -129,11 +132,13 @@
             android:backgroundTint="@color/white"
             android:text="@string/login_create_a_new_account"
             android:textAllCaps="false"
-            android:textColor="@color/purple_500"
+            android:textColor="@android:color/holo_red_light"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:strokeColor="#000000"
+            app:strokeWidth="1sp" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

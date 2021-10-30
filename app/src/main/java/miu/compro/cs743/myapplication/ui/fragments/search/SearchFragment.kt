@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.*
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import androidx.appcompat.widget.SearchView
 import miu.compro.cs743.myapplication.R
 import miu.compro.cs743.myapplication.base.BaseFragment
 import miu.compro.cs743.myapplication.databinding.FragmentSearchBinding
@@ -15,21 +14,20 @@ import miu.compro.cs743.myapplication.ui.fragments.newslist.NewsListFragment.Com
 import miu.compro.cs743.myapplication.ui.fragments.newslist.NewsListFragment.Companion.ITEM_CLICKED
 import miu.compro.cs743.myapplication.ui.fragments.newslist.NewsListFragment.Companion.SHARE_CLICKED
 import org.koin.android.viewmodel.ext.android.viewModel
-import android.widget.LinearLayout
 import android.widget.Toast
-import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import miu.compro.cs743.myapplication.NewsApplication.Companion.applicationContext
 import miu.compro.cs743.myapplication.ui.activity.articledetail.ArticleDetailActivity.Companion.DETAIL_ARTICLE
 import miu.compro.cs743.myapplication.ui.activity.articledetail.ArticleDetailActivity.Companion.DETAIL_IS_VIDEO
-import miu.compro.cs743.myapplication.ui.activity.main.MainActivity
+import miu.compro.cs743.myapplication.ui.activity.main.MainViewModel
 import miu.compro.cs743.myapplication.util.getCurrentUser
+import org.koin.android.viewmodel.ext.android.sharedViewModel
 
 
-class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding::inflate),
-    SearchView.OnQueryTextListener {
+class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding::inflate) {
     private val searchViewModel: SearchViewModel by viewModel()
     private lateinit var photoAdapter: PhotoNewsAdapter
+    private val mainViewModel : MainViewModel by sharedViewModel()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -45,40 +43,8 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
         observeData()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.option_menu_search, menu)
-        initializeSearchView(menu)
-    }
-
-
-    private fun initializeSearchView(menu: Menu?) {
-        val search = menu?.findItem(R.id.menu_search)
-        //val searchManager = requireActivity().getSystemService(SEARCH_SERVICE) as SearchManager
-
-        val searchView = search?.actionView as? SearchView
-        searchView?.apply {
-            //setSearchableInfo(searchManager.getSearchableInfo(requireActivity().componentName))
-            isQueryRefinementEnabled = true;
-            setIconifiedByDefault(true)
-            isFocusable = true
-            isIconified = false
-            requestFocusFromTouch()
-            setOnQueryTextListener(this@SearchFragment)
-        }
-
-    }
-
-    override fun onQueryTextSubmit(keyword: String?): Boolean {
-        searchViewModel.searchArticleByKeyword(keyword)
-        return false
-    }
-
-    override fun onQueryTextChange(newText: String?): Boolean {
-        return false
-    }
-
     private fun observeData() {
-        searchViewModel.article.observe(viewLifecycleOwner, { articles ->
+        mainViewModel.article.observe(viewLifecycleOwner, { articles ->
             articles?.let {
                 binding.tvErrorNotification.visibility = GONE
                 photoAdapter.setItems(it)
@@ -89,6 +55,8 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
             binding.tvErrorNotification.visibility = VISIBLE
             binding.tvErrorNotification.text = it
         })
+
+
     }
 
     private fun setRecyclerView() {
@@ -96,7 +64,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
         binding.rvArticles.layoutManager = LinearLayoutManager(context)
 
         photoAdapter = PhotoNewsAdapter().apply {
-            setOnItemClickListener { which, position, article, rootView ->
+            setOnItemClickListener { which, _, article, _ ->
                 when (which) {
                     ITEM_CLICKED -> {
                         val intent = Intent(
@@ -125,25 +93,5 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
             }
         }
         binding.rvArticles.adapter = photoAdapter
-    }
-
-
-    private fun initializeToolbar() {
-
-        val toolbar = Toolbar(requireContext())
-        val layoutParams = LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.MATCH_PARENT, 168
-        )
-        toolbar.layoutParams = layoutParams
-//        toolbar.popupTheme = R.style.
-//        toolbar.setBackgroundColor(resources.getColor(R.color.colorPrimary))
-        toolbar.title = null
-        toolbar.visibility = View.VISIBLE
-        toolbar.setContentInsetsAbsolute(0, 0)
-
-        // Assuming in activity_main, you are using LinearLayout as root
-        binding.llHolderSearchFragment.addView(toolbar, 0)
-
-        //mainActivity?.setSupportActionBar(toolbar)
     }
 }

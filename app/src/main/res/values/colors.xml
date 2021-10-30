@@ -11,4 +11,5 @@
     <color name="text_default">#333</color>
     <color name="gray">#B7B9BA</color>
     <color name="bottomLineColor">#DEDEDE</color>
+    <color name="red">#F30B0B</color>
 </resources>

@@ -28,6 +28,7 @@ class ArticleDetailActivity : BaseActivity<ActivityArticleDetailBinding>(Activit
 
     private fun showActionBar() {
         supportActionBar?.apply {
+            show()
             setDisplayHomeAsUpEnabled(true)
             title = null
         }
@@ -95,10 +96,10 @@ class ArticleDetailActivity : BaseActivity<ActivityArticleDetailBinding>(Activit
         const val DETAIL_IS_VIDEO = "isVideo"
         fun startActivity(activity: Activity?, view: View, article: Article, isVideo: Boolean) {
 
-            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                activity!!,
-                view,
-                "transition")
+//            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+//                activity!!,
+//                view,
+//                "transition")
 
             Intent(activity, ArticleDetailActivity::class.java).apply {
                 this.putExtra(DETAIL_ANIMATION_NAME, "transition")
@@ -106,7 +107,7 @@ class ArticleDetailActivity : BaseActivity<ActivityArticleDetailBinding>(Activit
                 this.putExtra(DETAIL_IS_VIDEO, isVideo)
             }.also {
 //                activity.startActivity(it, options.toBundle())
-                activity.startActivity(it)
+                activity?.startActivity(it)
 
                 //activity.overridePendingTransition(R.anim.bounce, R.anim.fade_in)
             }

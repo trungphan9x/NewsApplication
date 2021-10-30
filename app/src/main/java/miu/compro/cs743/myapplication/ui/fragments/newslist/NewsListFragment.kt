@@ -52,7 +52,7 @@ class NewsListFragment : BaseFragment<FragmentNewsBinding>(FragmentNewsBinding::
         binding.rvArticles.setHasFixedSize(true)
         binding.rvArticles.layoutManager = LinearLayoutManager(context)
         photoAdapter  = PhotoNewsAdapter().apply {
-            setOnItemClickListener { which, position, article, rootView ->
+            setOnItemClickListener { which, _, article, _ ->
                 when (which) {
                     ITEM_CLICKED -> {
                         val intent = Intent(requireActivity(), ArticleDetailActivity::class.java).apply {

@@ -6,11 +6,11 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface ApiService {
-    @GET("https://newsapi.org/v2/top-headlines?country=us&apiKey=b4f991b4bc61490db1ce6b567b920f71")
+    @GET("https://newsapi.org/v2/top-headlines?country=us&apiKey=12008ee87fac42fca7f196ff42a5433a")
     suspend fun getArticleList(@Query("category") category: String): NewsAppResponseBody<List<Article>>
 
 
-    @GET("https://newsapi.org/v2/everything?apiKey=b4f991b4bc61490db1ce6b567b920f71")
+    @GET("https://newsapi.org/v2/everything?apiKey=12008ee87fac42fca7f196ff42a5433a")
     suspend fun searchArticleByKeyword(@Query("q") keyword: String): NewsAppResponseBody<List<Article>>
 
     @GET("https://trungphan9x.github.io/videos.json")

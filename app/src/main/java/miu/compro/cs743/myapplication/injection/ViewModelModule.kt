@@ -15,9 +15,9 @@ import org.koin.dsl.module
 
 val viewModelsModule = module {
     factory { Dispatchers.IO }
-    viewModel { MainViewModel(get()) }
+    viewModel { MainViewModel(get(), get()) }
     viewModel { HomeViewModel() }
-    viewModel { SearchViewModel(get(), get(), get()) }
+    viewModel { SearchViewModel(get(), get()) }
     viewModel { VideoViewModel(get(), get(), get()) }
     viewModel { ProfileViewModel(get(), get()) }
     viewModel { NewsListViewModel(get(), get(), get()) }

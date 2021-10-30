@@ -7,6 +7,8 @@ import android.widget.PopupMenu
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
 import miu.compro.cs743.myapplication.NewsApplication.Companion.applicationContext
 import miu.compro.cs743.myapplication.R
 import miu.compro.cs743.myapplication.databinding.ItemNewsPhotoBinding
@@ -53,6 +55,9 @@ class PhotoNewsAdapter() : ListAdapter<Article, PhotoNewsAdapter.ViewHolder>(Dif
 
         GlideApp.with(holder.binding.root.context)
             .load(articles[position].urlToImage)
+            .apply(RequestOptions()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+            )
             .placeholder(R.drawable.default_image)
             .into(holder.binding.ivImage)
 
@@ -79,7 +84,6 @@ class PhotoNewsAdapter() : ListAdapter<Article, PhotoNewsAdapter.ViewHolder>(Dif
                 }
             }
             popup.show()
-            true
         }
 
         holder.binding.btnShare.setOnClickListener {

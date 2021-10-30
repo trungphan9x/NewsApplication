@@ -1,75 +1,52 @@
 package miu.compro.cs743.myapplication.ui.fragments.profile
 
+import android.app.Activity.RESULT_OK
+import android.content.ActivityNotFoundException
+import android.content.ContentValues
 import android.content.Intent
+import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
-import android.view.Gravity
-import android.view.MotionEvent
+import android.os.Environment
+import android.provider.MediaStore
 import android.view.View
 import android.view.View.*
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.appcompat.widget.PopupMenu
+import androidx.core.content.FileProvider
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import miu.compro.cs743.myapplication.NewsApplication.Companion.applicationContext
 import miu.compro.cs743.myapplication.R
 import miu.compro.cs743.myapplication.base.BaseFragment
 import miu.compro.cs743.myapplication.databinding.FragmentProfileBinding
-import miu.compro.cs743.myapplication.model.data.Language
 import miu.compro.cs743.myapplication.ui.activity.articledetail.ArticleDetailActivity
 import miu.compro.cs743.myapplication.ui.activity.articledetail.ArticleDetailActivity.Companion.DETAIL_ARTICLE
 import miu.compro.cs743.myapplication.ui.activity.articledetail.ArticleDetailActivity.Companion.DETAIL_IS_VIDEO
 import miu.compro.cs743.myapplication.ui.activity.main.MainActivity
-import miu.compro.cs743.myapplication.ui.activity.main.MainViewModel
 import miu.compro.cs743.myapplication.ui.fragments.newslist.NewsListFragment
 import miu.compro.cs743.myapplication.ui.fragments.newslist.PhotoNewsAdapter
 import miu.compro.cs743.myapplication.util.*
-import org.koin.android.ext.android.inject
-import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
+import java.io.File
+import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.*
 
-class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBinding::inflate), AdapterView.OnItemSelectedListener, View.OnTouchListener  {
+open class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBinding::inflate)  {
     private val viewModel: ProfileViewModel by viewModel()
-    private val mainVM: MainViewModel by sharedViewModel()
     private val args: ProfileFragmentArgs by navArgs<ProfileFragmentArgs>()
     private lateinit var photoAdapter: PhotoNewsAdapter
-//    private lateinit var languageList: ArrayList<Language>
-    var languages = hashMapOf<String,String>("English" to "en", "Vietnam" to "vn")
-    private var isTouched: Boolean = false
-    private var mainActivity: MainActivity? = null
+    private lateinit var currentPhotoPath: String
+    private var capturedImageURI: Uri? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         getExtraDataFromLogin()
         setListener()
+        viewModel.getAllBookmark()
         setObserver()
         setRecyclerView()
-        viewModel.getAllBookmark()
-        setLanguageZone()
     }
-
-    private fun setLanguageZone() {
-        if (activity is MainActivity) {
-            mainActivity = (activity as? MainActivity)
-        }
-
-        var aa = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, languages.keys.toTypedArray())
-        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-
-        with(binding.spinner)
-        {
-            adapter = aa
-            setSelection(0, false)
-            onItemSelectedListener = this@ProfileFragment
-            setOnTouchListener(this@ProfileFragment)
-            prompt = "Select your favourite language"
-            gravity = Gravity.CENTER
-
-        }
-    }
-
-
 
     private fun getExtraDataFromLogin() {
         if(applicationContext().getCurrentUser() == null) {
@@ -118,6 +95,10 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
                 show()
             }
         }
+
+        binding.ivAvatar.setOnClickListener {
+            capturedImageURI = pickFromCamera()
+        }
     }
 
     private fun setView() {
@@ -134,6 +115,10 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
                     "${it.firstname} ${it.lastname}".also {
                         binding.tvFullName.text = it
                     }
+                }
+                requireActivity().getCurrentUriPicture()?.let {
+                    val uri = Uri.parse(it)
+                    binding.ivAvatar.setImageURI(uri)
                 }
             }
         }
@@ -173,19 +158,41 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
         binding.rvArticles.adapter = photoAdapter
     }
 
-    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        if (!isTouched) return
-        mainVM.setSelectedLanguage(languages.values.elementAt(position))
-        isTouched = false
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            capturedImageURI?.also {
+                binding.ivAvatar.setImageURI(it)
+                requireActivity().setCurrentUriPicture(it)
+            }
+        }
+    }
+
+    private fun pickFromCamera(): Uri? {
+        //Create an Intent with action as ACTION_PICK
+        try {
+            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+            val timeStamp = java.text.SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+            val fname = "TmpImage$timeStamp.jpg"
+            val values = ContentValues()
+            values.put(MediaStore.Images.Media.TITLE, fname)
+            val capturedImageURI = requireActivity().contentResolver?.insert(
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values
+            )
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, capturedImageURI)
+            values.clear()
+            startActivityForResult(
+                intent,
+                REQUEST_IMAGE_CAPTURE
+            )
+            return capturedImageURI
+        } catch (e: Exception) {
+            return null
+        }
+
     }
 
 
-    override fun onNothingSelected(p0: AdapterView<*>?) {
+    companion object {
+        const val REQUEST_IMAGE_CAPTURE = 101
     }
-
-    override fun onTouch(p0: View?, p1: MotionEvent?): Boolean {
-        isTouched = true
-        return false
-    }
-
 }

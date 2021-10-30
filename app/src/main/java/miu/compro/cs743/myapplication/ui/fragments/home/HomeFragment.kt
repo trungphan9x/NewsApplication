@@ -2,6 +2,7 @@ package miu.compro.cs743.myapplication.ui.fragments.home
 
 import android.os.Bundle
 import android.view.View
+import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import miu.compro.cs743.myapplication.R
 import miu.compro.cs743.myapplication.base.BaseFragment
@@ -36,9 +37,23 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         val adapter = HomePagerAdapter(childFragmentManager, lifecycle, tabsMap.keys.toTypedArray())
         binding.viewPager.adapter = adapter
 
-        TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
+        binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+            }
+
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                tab?.position?.let { binding.viewPager.setCurrentItem(it, false) }
+            }
+
+        })
+
+       TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
             tab.text = tabsMap.values.toTypedArray()[position]
         }.attach()
+
     }
 
 

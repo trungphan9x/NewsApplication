@@ -1,9 +1,12 @@
 package miu.compro.cs743.myapplication.base
 
 import android.app.Activity
+import android.content.ContentValues
 import android.content.DialogInterface
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +16,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import androidx.viewbinding.ViewBinding
 import miu.compro.cs743.myapplication.R
+import miu.compro.cs743.myapplication.ui.fragments.profile.ProfileFragment.Companion.REQUEST_IMAGE_CAPTURE
 import java.util.*
 
 typealias Inflate<T> = (LayoutInflater, ViewGroup?, Boolean) -> T

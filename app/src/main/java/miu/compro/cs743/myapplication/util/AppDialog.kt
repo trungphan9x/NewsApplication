@@ -27,17 +27,17 @@ object AppDialog {
 
         alertDialogBuilder.setMessage(message)
 
-        alertDialogBuilder.setPositiveButton(context.getString(R.string.notification_ok)    , DialogInterface.OnClickListener { dialog, id ->
+        alertDialogBuilder.setPositiveButton(context.getString(R.string.notification_ok)    , DialogInterface.OnClickListener { dialog, _ ->
             dialog.dismiss()
             positive?.invoke()
         })
-        alertDialogBuilder.setNegativeButton(context.getString(R.string.notification_cancel), DialogInterface.OnClickListener { dialog, id ->
+        alertDialogBuilder.setNegativeButton(context.getString(R.string.notification_cancel), DialogInterface.OnClickListener { dialog, _ ->
             dialog.dismiss()
         })
         alertDialogBuilder.setOnCancelListener{dialog ->
             dialog.dismiss()
         }
-        alertDialogBuilder.setOnKeyListener { dialog, keyCode, event ->
+        alertDialogBuilder.setOnKeyListener { dialog, keyCode, _ ->
             if (keyCode == KeyEvent.KEYCODE_BACK) {
                 dialog.dismiss()
                 //positive?.invoke()
